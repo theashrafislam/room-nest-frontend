@@ -5,19 +5,19 @@ function Button({ children, to, variant = 'primary', type = 'button', className 
 
     const variants = {
         primary:
-            "bg-[#0F766E] text-white hover:bg-[#115E59]",
+            "bg-primary text-white hover:bg-primary-hover",
 
         secondary:
-            "bg-[#F59E0B] text-white hover:bg-[#D97706]",
+            "bg-secondary text-white hover:bg-secondary-hover",
 
         outline:
-            "border border-[#0F766E] text-[#0F766E] hover:bg-[#0F766E] hover:text-white",
+            "border border-primary text-primary hover:bg-primary hover:text-white",
 
         danger:
-            "bg-red-600 text-white hover:bg-red-700",
+            "bg-danger text-white hover:bg-danger-hover",
     };
 
- // button styles for link tag 
+    // button styles for link tag 
     const buttonStyles = `
     inline-flex items-center justify-center
     px-5 py-2.5
@@ -29,7 +29,7 @@ function Button({ children, to, variant = 'primary', type = 'button', className 
     ${className}
   `;
 
-// Navigation Button
+    // Navigation Button
     if (to) {
         return (
             <Link to={to} className={buttonStyles} {...props}>{children}</Link>
