@@ -38,11 +38,9 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur-md">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 lg:px-0">
 
-        {/* ================================
-            LOGO
-        ================================= */}
+{/* logo  */}
         <Link
           to="/"
           className="shrink-0 text-2xl font-extrabold tracking-tight text-primary"
@@ -53,9 +51,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* ================================
-            DESKTOP NAVIGATION
-        ================================= */}
+{/* desktop menu  */}
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
             <NavLink
@@ -68,9 +64,7 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* ================================
-            DESKTOP ACTIONS
-        ================================= */}
+{/* desktop action  */}
         <div className="hidden items-center gap-3 md:flex">
 
           <Link
@@ -91,9 +85,7 @@ const Navbar = () => {
 
         </div>
 
-        {/* ================================
-            MOBILE MENU BUTTON
-        ================================= */}
+{/* mobile menu ui  */}
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
@@ -109,9 +101,7 @@ const Navbar = () => {
 
       </div>
 
-      {/* ================================
-          MOBILE MENU
-      ================================= */}
+{/* mobile menu  */}
       {isOpen && (
         <div className="border-t border-border bg-card md:hidden">
 
