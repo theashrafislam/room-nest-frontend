@@ -25,15 +25,15 @@ const Footer = () => {
                             to="/"
                             className="text-3xl font-extrabold tracking-tight text-primary"
                         >
-                            Stay
+                            Room
                             <span className="text-secondary">
-                                Vista
+                                Nest
                             </span>
                         </Link>
 
                         <p className="mt-5 max-w-sm text-sm leading-7 text-muted">
                             Discover beautiful stays, comfortable rooms,
-                            and unforgettable experiences with StayVista.
+                            and unforgettable experiences with Room Nest.
                         </p>
 
                         {/* Social Icons */}
@@ -188,7 +188,7 @@ const Footer = () => {
 
                             {/* Email */}
                             <a
-                                href="mailto:hello@stayvista.com"
+                                href="mailto:hello@RoomNest.com"
                                 className="flex items-center gap-3 text-sm text-muted transition hover:text-primary"
                             >
                                 <FiMail
@@ -196,7 +196,7 @@ const Footer = () => {
                                     size={18}
                                 />
 
-                                hello@stayvista.com
+                                hello@RoomNest.com
                             </a>
 
                             {/* Phone */}
@@ -225,7 +225,7 @@ const Footer = () => {
                 <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-center sm:flex-row sm:px-6 lg:px-8 sm:text-left">
 
                     <p className="text-sm text-muted">
-                        © {currentYear} StayVista. All rights reserved.
+                        © {currentYear} RoomNest. All rights reserved.
                     </p>
 
                     <p className="text-sm text-muted">

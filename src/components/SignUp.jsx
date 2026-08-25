@@ -130,7 +130,7 @@ const SignUp = () => {
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-muted sm:text-base">
-                Join StayVista and discover your next perfect
+                Join Room Nest and discover your next perfect
                 getaway.
               </p>
             </div>
@@ -422,7 +422,7 @@ const SignUp = () => {
               </h1>
 
               <p className="mt-6 max-w-md text-lg leading-8 text-teal-50">
-                Create your StayVista account and discover
+                Create your Room Nest account and discover
                 beautiful accommodations and unforgettable
                 experiences.
               </p>

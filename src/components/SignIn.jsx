@@ -18,7 +18,7 @@ const SignIn = () => {
             <div className="max-w-lg text-white">
 
               <span className="inline-block rounded-full bg-white/10 px-4 py-2 text-sm font-medium">
-                Welcome to StayVista
+                Welcome to Room Nest
               </span>
 
               <h1 className="mt-6 text-5xl font-bold leading-tight xl:text-6xl">

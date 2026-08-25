@@ -45,9 +45,9 @@ const Navbar = () => {
           to="/"
           className="shrink-0 text-2xl font-extrabold tracking-tight text-primary"
         >
-          Stay
+          Room
           <span className="text-secondary">
-            Vista
+            Nest
           </span>
         </Link>
 
