@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import { FiMail, FiLock } from "react-icons/fi";
-import Button from "../components/shared/Button";
+import Button from "../../components/shared/Button";
+
 
 const SignIn = () => {
   return (

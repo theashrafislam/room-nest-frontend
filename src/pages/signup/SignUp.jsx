@@ -8,7 +8,7 @@ import {
   FiCamera,
 } from "react-icons/fi";
 
-import Button from "../components/shared/Button";
+import Button from "../../components/shared/Button";
 
 const SignUp = () => {
   // Form State
