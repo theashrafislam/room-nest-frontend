@@ -393,11 +393,10 @@ const About = () => {
                                     <Link to="/dashboard">
                                         <Button
                                             variant="secondary"
-                                            className="w-full sm:w-auto"
+                                            className="w-full sm:w-auto inline-flex items-center justify-center gap-2"
                                         >
-                                            Become a Host
-
-                                            <FiArrowRight size={17} />
+                                            <span>Become a Host</span>
+                                            <FiArrowRight size={17} className="shrink-0" />
                                         </Button>
                                     </Link>
                                 </div>
