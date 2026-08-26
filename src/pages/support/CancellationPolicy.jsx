@@ -15,7 +15,7 @@ const CancellationPolicy = () => {
       {/* Header */}
 
       <section className="border-b border-border bg-card">
-        <div className="mx-auto max-w-5xl px-5 py-14 sm:px-8 lg:px-12 lg:py-18">
+        <div className="mx-auto max-w-6xl px-4 lg:px-0 py-14 lg:py-18">
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-sm font-semibold text-muted transition duration-300 hover:text-primary"
@@ -51,7 +51,7 @@ const CancellationPolicy = () => {
       {/* Policy Overview */}
 
       <section className="bg-background">
-        <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-0 py-12 lg:py-16">
           <div className="grid gap-5 sm:grid-cols-3">
             <PolicyCard
               icon={<FiCalendar />}
@@ -77,7 +77,7 @@ const CancellationPolicy = () => {
       {/* Main Content */}
 
       <section className="border-y border-border bg-card">
-        <div className="mx-auto max-w-5xl px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+        <div className="mx-auto max-w-6xl px-4 lg:px-0 py-12 lg:py-16">
           <div className="space-y-8">
             <CancellationSection
               number="01"
