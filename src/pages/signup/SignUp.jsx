@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import {
@@ -7,11 +6,13 @@ import {
   FiLock,
   FiCamera,
 } from "react-icons/fi";
-
 import Button from "../../components/shared/Button";
 import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
+
+  const { createUser } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -25,8 +26,37 @@ const SignUp = () => {
       return;
     }
 
-    const userData = { email, password }
-    console.log(userData);
+
+    createUser(email, password)
+      .then((result) => {
+        if (result?.user?.uid) {
+          toast.success("Your account has been created successfully!");
+        }
+        // console.log(result);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        if (errorCode === "auth/email-already-in-use") {
+          toast.error(
+            "An account already exists with this email address."
+          );
+        } else if (errorCode === "auth/invalid-email") {
+          toast.error(
+            "Please enter a valid email address."
+          );
+        } else if (errorCode === "auth/weak-password") {
+          toast.error(
+            "Your password is too weak. Please use a stronger password."
+          );
+        } else {
+          toast.error(
+            "Something went wrong while creating your account. Please try again."
+          );
+        }
+
+        // console.log(error);
+      });
   }
 
   return (
