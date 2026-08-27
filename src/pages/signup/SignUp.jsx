@@ -9,104 +9,33 @@ import {
 } from "react-icons/fi";
 
 import Button from "../../components/shared/Button";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
-  // Form State
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    photo: null,
-    password: "",
-    confirmPassword: "",
-  });
 
-  // Error State
-  const [errors, setErrors] = useState({});
-
-  // Handle Input Change
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
-
-    // Remove error when user starts fixing the field
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
-  };
-
-  // Validate Form
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = "Please enter your full name.";
-    } else if (formData.name.trim().length < 3) {
-      newErrors.name = "Name must be at least 3 characters.";
-    }
-
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = "Please enter your email address.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
-    // Photo validation
-    if (!formData.photo) {
-      newErrors.photo = "Please select a profile photo.";
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = "Please create a password.";
-    } else if (formData.password.length < 6) {
-      newErrors.password =
-        "Password must be at least 6 characters.";
-    }
-
-    // Confirm password validation
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword =
-        "Please confirm your password.";
-    } else if (
-      formData.password !== formData.confirmPassword
-    ) {
-      newErrors.confirmPassword =
-        "Passwords do not match.";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Submit Form
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    const target = e.target;
+    const email = target.email.value;
+    const password = target.password.value;
+    const confirmPassword = target.confirmPassword.value;
 
-    const isValid = validateForm();
-
-    if (!isValid) {
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match. Please check your confirm password.");
       return;
     }
 
-    // Firebase registration logic will come here
-    console.log("Registration Data:", formData);
-  };
+    const userData = { email, password }
+    console.log(userData);
+  }
 
   return (
     <section className="min-h-screen bg-background">
       <div className="grid min-h-screen lg:grid-cols-2">
 
-        {/* ========================================
-            LEFT SIDE - REGISTER FORM
-        ======================================== */}
+
+        {/* LEFT SIDE - REGISTER FORM */}
+
         <div className="flex items-center justify-center px-5 py-10 sm:px-8 lg:px-12">
           <div className="w-full max-w-2xl lg:max-w-xl">
 
@@ -135,9 +64,9 @@ const SignUp = () => {
               </p>
             </div>
 
-            {/* ========================================
-                GOOGLE SIGN UP
-            ======================================== */}
+
+            {/* GOOGLE SIGN UP */}
+
             <button
               type="button"
               className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-card px-5 py-3 font-semibold text-text shadow-sm transition duration-300 hover:border-primary hover:shadow-md"
@@ -147,9 +76,9 @@ const SignUp = () => {
               Continue with Google
             </button>
 
-            {/* ========================================
-                DIVIDER
-            ======================================== */}
+
+            {/* DIVIDER */}
+
             <div className="my-7 flex items-center gap-4">
               <div className="h-px flex-1 bg-border" />
 
@@ -160,17 +89,17 @@ const SignUp = () => {
               <div className="h-px flex-1 bg-border" />
             </div>
 
-            {/* ========================================
-                REGISTER FORM
-            ======================================== */}
+
+            {/* REGISTER FORM */}
+
             <form
               onSubmit={handleSubmit}
               className="space-y-4"
             >
 
-              {/* ======================================
-                  NAME + EMAIL
-              ====================================== */}
+
+              {/* NAME + EMAIL */}
+
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                 {/* Name */}
@@ -191,22 +120,12 @@ const SignUp = () => {
                       id="name"
                       name="name"
                       type="text"
-                      value={formData.name}
-                      onChange={handleChange}
                       placeholder="Your name"
-                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 ${
-                        errors.name
-                          ? "border-danger focus:border-danger"
-                          : "border-border focus:border-primary"
-                      }`}
+                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}
                     />
                   </div>
 
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-danger">
-                      {errors.name}
-                    </p>
-                  )}
+
                 </div>
 
                 {/* Email */}
@@ -227,28 +146,16 @@ const SignUp = () => {
                       id="email"
                       name="email"
                       type="email"
-                      value={formData.email}
-                      onChange={handleChange}
+                      required
                       placeholder="you@example.com"
-                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 ${
-                        errors.email
-                          ? "border-danger focus:border-danger"
-                          : "border-border focus:border-primary"
-                      }`}
+                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}
                     />
                   </div>
-
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-danger">
-                      {errors.email}
-                    </p>
-                  )}
                 </div>
               </div>
 
-              {/* ======================================
-                  PASSWORD + CONFIRM PASSWORD
-              ====================================== */}
+              {/* PASSWORD + CONFIRM PASSWORD */}
+
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                 {/* Password */}
@@ -269,22 +176,12 @@ const SignUp = () => {
                       id="password"
                       name="password"
                       type="password"
-                      value={formData.password}
-                      onChange={handleChange}
+                      required
                       placeholder="Create password"
-                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 ${
-                        errors.password
-                          ? "border-danger focus:border-danger"
-                          : "border-border focus:border-primary"
-                      }`}
+                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}
                     />
                   </div>
 
-                  {errors.password && (
-                    <p className="mt-1 text-sm text-danger">
-                      {errors.password}
-                    </p>
-                  )}
                 </div>
 
                 {/* Confirm Password */}
@@ -305,28 +202,16 @@ const SignUp = () => {
                       id="confirmPassword"
                       name="confirmPassword"
                       type="password"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
+                      required
                       placeholder="Confirm password"
-                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 ${
-                        errors.confirmPassword
-                          ? "border-danger focus:border-danger"
-                          : "border-border focus:border-primary"
-                      }`}
+                      className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}
                     />
                   </div>
-
-                  {errors.confirmPassword && (
-                    <p className="mt-1 text-sm text-danger">
-                      {errors.confirmPassword}
-                    </p>
-                  )}
                 </div>
               </div>
 
-              {/* ======================================
-                  PROFILE PHOTO
-              ====================================== */}
+              {/* PROFILE PHOTO */}
+
               <div>
                 <label
                   htmlFor="photo"
@@ -345,25 +230,17 @@ const SignUp = () => {
                     name="photo"
                     type="file"
                     accept="image/*"
-                    onChange={handleChange}
-                    className={`w-full rounded-xl border bg-card py-2.5 pl-11 pr-3 text-sm text-muted outline-none transition ${
-                      errors.photo
-                        ? "border-danger"
-                        : "border-border"
-                    } file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-2 file:font-semibold file:text-primary hover:file:bg-primary/20`}
+                    // onChange={handleChange}
+                    className={`w-full rounded-xl border bg-card py-2.5 pl-11 pr-3 text-sm text-muted outline-none transition  file:mr-4 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-2 file:font-semibold file:text-primary hover:file:bg-primary/20`}
                   />
                 </div>
 
-                {errors.photo && (
-                  <p className="mt-1 text-sm text-danger">
-                    {errors.photo}
-                  </p>
-                )}
+
               </div>
 
-              {/* ======================================
-                  SUBMIT BUTTON
-              ====================================== */}
+
+              {/* SUBMIT BUTTON */}
+
               <Button
                 type="submit"
                 variant="primary"
@@ -373,9 +250,9 @@ const SignUp = () => {
               </Button>
             </form>
 
-            {/* ========================================
-                SIGN IN LINK
-            ======================================== */}
+
+            {/* SIGN IN LINK */}
+
             <p className="mt-6 text-center text-sm text-muted">
               Already have an account?{" "}
               <Link
@@ -399,9 +276,8 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* ========================================
-            RIGHT SIDE - BRANDING
-        ======================================== */}
+        {/* RIGHT SIDE - BRANDING */}
+
         <div className="relative hidden overflow-hidden bg-primary lg:flex">
 
           {/* Decorative Circle */}
