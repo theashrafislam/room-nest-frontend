@@ -6,7 +6,7 @@ export default function Home() {
 
     const name = useAuth();
 
-    console.log(name)
+    // console.log(name)
 
     const notify = () => toast.success('Here is your toast.');
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import {
   FiUser,
@@ -12,7 +12,8 @@ import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
 
-  const { createUser } = useAuth();
+  const { createUser, loginWithGoogle, logOut, profileUpdate } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -20,6 +21,10 @@ const SignUp = () => {
     const email = target.email.value;
     const password = target.password.value;
     const confirmPassword = target.confirmPassword.value;
+    const fullName  = target.fullName.value;
+    // const photoURL = target.photoURL.value;
+
+    // console.log(fullName)
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match. Please check your confirm password.");
@@ -30,7 +35,14 @@ const SignUp = () => {
     createUser(email, password)
       .then((result) => {
         if (result?.user?.uid) {
-          toast.success("Your account has been created successfully!");
+          console.log('hello ia m ok')
+          profileUpdate(fullName)
+            .then((result) => {
+              console.log(result)
+            })
+          // logOut();
+          toast.success("Account created successfully! Please login.");
+          navigate("/sign-in");
         }
         // console.log(result);
       })
@@ -58,6 +70,42 @@ const SignUp = () => {
         // console.log(error);
       });
   }
+
+  const handleGoogleButton = () => {
+    loginWithGoogle()
+      .then((result) => {
+        if (result?.user?.uid) {
+          toast.success("Welcome! You have signed in with Google successfully.");
+        }
+
+        // console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+
+        if (errorCode === "auth/popup-closed-by-user") {
+          toast.error("Google sign-in was cancelled. Please try again.");
+        } else if (errorCode === "auth/popup-blocked") {
+          toast.error(
+            "The Google sign-in popup was blocked. Please allow popups and try again."
+          );
+        } else if (errorCode === "auth/account-exists-with-different-credential") {
+          toast.error(
+            "An account already exists with this email using a different sign-in method."
+          );
+        } else if (errorCode === "auth/network-request-failed") {
+          toast.error(
+            "Network error. Please check your internet connection and try again."
+          );
+        } else {
+          toast.error(
+            "Unable to sign in with Google. Please try again later."
+          );
+        }
+
+        // console.log(error);
+      });
+  };
 
   return (
     <section className="min-h-screen bg-background">
@@ -98,6 +146,7 @@ const SignUp = () => {
             {/* GOOGLE SIGN UP */}
 
             <button
+              onClick={handleGoogleButton}
               type="button"
               className="mt-8 flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-card px-5 py-3 font-semibold text-text shadow-sm transition duration-300 hover:border-primary hover:shadow-md"
             >
@@ -148,7 +197,7 @@ const SignUp = () => {
 
                     <input
                       id="name"
-                      name="name"
+                      name="fullName"
                       type="text"
                       placeholder="Your name"
                       className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}
