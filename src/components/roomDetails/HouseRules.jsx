@@ -5,73 +5,76 @@ import {
     FiSlash,
     FiHeart,
     FiUsers,
+    FiCheckCircle,
 } from "react-icons/fi";
 
 const HouseRules = ({ rules }) => {
-    if (!rules) {
+    if (!Array.isArray(rules) || rules.length === 0) {
         return null;
     }
 
-    const rulesData = [
-        {
-            label: "Check-in",
-            value: rules.checkIn,
-            icon: FiClock,
-        },
-        {
-            label: "Check-out",
-            value: rules.checkOut,
-            icon: FiLogOut,
-        },
-        {
-            label: "Smoking",
-            value: rules.smoking,
-            icon: FiSlash,
-        },
-        {
-            label: "Pets",
-            value: rules.pets,
-            icon: FiHeart,
-        },
-        {
-            label: "Parties",
-            value: rules.parties,
-            icon: FiUsers,
-        },
-    ];
+    const getRuleIcon = (rule) => {
+        const text = rule.toLowerCase();
+
+        if (text.includes("check-in")) {
+            return FiClock;
+        }
+
+        if (text.includes("check-out")) {
+            return FiLogOut;
+        }
+
+        if (text.includes("smoking")) {
+            return FiSlash;
+        }
+
+        if (text.includes("pets")) {
+            return FiHeart;
+        }
+
+        if (text.includes("parties") || text.includes("events")) {
+            return FiUsers;
+        }
+
+        return FiCheckCircle;
+    };
 
     return (
         <section className="border-t border-border pt-8">
-            <h2 className="text-xl font-bold text-text sm:text-2xl">
-                House rules
-            </h2>
+            {/* Section Header */}
+            <div>
+                <h2 className="text-xl font-bold text-text sm:text-2xl">
+                    House rules
+                </h2>
 
-            <p className="mt-2 text-sm leading-6 text-muted">
-                Please review the house rules before making your reservation.
-            </p>
+                <p className="mt-2 text-sm leading-6 text-muted">
+                    Please review the house rules before making your reservation.
+                </p>
+            </div>
 
-            <div className="mt-5 divide-y divide-border rounded-2xl border border-border bg-card">
-                {rulesData.map((rule) => {
-                    const Icon = rule.icon;
+            {/* Rules */}
+            <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-card">
+                {rules.map((rule, index) => {
+                    const Icon = getRuleIcon(rule);
 
                     return (
                         <div
-                            key={rule.label}
-                            className="flex items-center justify-between gap-4 p-4"
+                            key={`${rule}-${index}`}
+                            className={`flex items-center gap-4 p-4 sm:p-5 ${
+                                index !== rules.length - 1
+                                    ? "border-b border-border"
+                                    : ""
+                            }`}
                         >
-                            <div className="flex items-center gap-3">
-                                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                                    <Icon />
-                                </div>
-
-                                <span className="text-sm font-medium text-text">
-                                    {rule.label}
-                                </span>
+                            {/* Icon */}
+                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                <Icon className="text-lg" />
                             </div>
 
-                            <span className="text-right text-sm text-muted">
-                                {rule.value}
-                            </span>
+                            {/* Rule */}
+                            <p className="text-sm font-medium leading-6 text-text sm:text-base">
+                                {rule}
+                            </p>
                         </div>
                     );
                 })}

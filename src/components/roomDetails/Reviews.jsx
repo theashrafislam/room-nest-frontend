@@ -15,8 +15,7 @@ const Reviews = ({ reviews = [], }) => {
                         <FiStar className="fill-secondary text-secondary" />
 
                         <span className="font-semibold text-text">{reviews?.rating}</span>
-
-                        <span className="text-sm text-muted">{reviews?.length} reviews</span>
+                        <span className="text-sm text-muted">{reviews?.length} <span>·</span> reviews</span>
                     </div>
                 </div>
             </div>

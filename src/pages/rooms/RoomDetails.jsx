@@ -84,14 +84,12 @@ const RoomDetails = () => {
                         {/* Rules + Location */}
                         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
 
-                            <HouseRules
-                                rules={room.houseRules}
-                            />
+                            <HouseRules rules={room.houseRules}/>
 
-                            {/* <LocationInfo
+                            <LocationInfo
                                 location={room.location}
                                 details={room.locationDetails}
-                            /> */}
+                            />
 
                         </div>
 
