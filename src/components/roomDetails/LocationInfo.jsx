@@ -70,6 +70,7 @@ const LocationInfo = ({ location, details }) => {
                     );
                 })}
             </div>
+            
         </section>
     );
 };
