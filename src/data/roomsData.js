@@ -48,9 +48,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Shinjuku",
-            city: "Tokyo",
-            country: "Japan",
+            station: "Shinjuku Station — 5 min walk",
+            convenienceStore: "7-Eleven — 2 min walk",
+            attraction: "Shinjuku Gyoen — 10 min walk",
         },
 
         reviews: [
@@ -122,16 +122,6 @@ export const roomsData = [
             "Heating",
         ],
 
-        host: {
-            name: "Haruto Sato",
-            avatar:
-                "https://i.pravatar.cc/150?img=11",
-            rating: 4.8,
-            reviewsCount: 64,
-            responseRate: "97%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -143,9 +133,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Shibuya",
-            city: "Tokyo",
-            country: "Japan",
+            station: "Shibuya Station — 4 min walk",
+            convenienceStore: "FamilyMart — 2 min walk",
+            attraction: "Shibuya Crossing — 6 min walk",
         },
 
         reviews: [
@@ -207,16 +197,6 @@ export const roomsData = [
             "Heating",
         ],
 
-        host: {
-            name: "Aiko Nakamura",
-            avatar:
-                "https://i.pravatar.cc/150?img=48",
-            rating: 4.9,
-            reviewsCount: 92,
-            responseRate: "99%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -229,9 +209,9 @@ export const roomsData = [
             "Free cancellation up to 5 days before check-in.",
 
         locationDetails: {
-            neighborhood: "Gion",
-            city: "Kyoto",
-            country: "Japan",
+            station: "Gion-Shijo Station — 7 min walk",
+            convenienceStore: "Lawson — 3 min walk",
+            attraction: "Yasaka Shrine — 5 min walk",
         },
 
         reviews: [
@@ -291,16 +271,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Kenji Mori",
-            avatar:
-                "https://i.pravatar.cc/150?img=68",
-            rating: 4.7,
-            reviewsCount: 51,
-            responseRate: "96%",
-            responseTime: "Within a few hours",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -312,9 +282,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Higashiyama",
-            city: "Kyoto",
-            country: "Japan",
+            station: "Higashiyama Station — 6 min walk",
+            convenienceStore: "FamilyMart — 3 min walk",
+            attraction: "Kiyomizu-dera — 12 min walk",
         },
 
         reviews: [
@@ -376,16 +346,6 @@ export const roomsData = [
             "Elevator",
         ],
 
-        host: {
-            name: "Ren Ito",
-            avatar:
-                "https://i.pravatar.cc/150?img=15",
-            rating: 4.8,
-            reviewsCount: 73,
-            responseRate: "98%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -397,9 +357,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Namba",
-            city: "Osaka",
-            country: "Japan",
+            station: "Namba Station — 5 min walk",
+            convenienceStore: "7-Eleven — 2 min walk",
+            attraction: "Dotonbori — 8 min walk",
         },
 
         reviews: [
@@ -459,16 +419,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Sora Yamamoto",
-            avatar:
-                "https://i.pravatar.cc/150?img=23",
-            rating: 4.6,
-            reviewsCount: 42,
-            responseRate: "95%",
-            responseTime: "Within a few hours",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -480,9 +430,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Umeda",
-            city: "Osaka",
-            country: "Japan",
+            station: "Umeda Station — 6 min walk",
+            convenienceStore: "Lawson — 2 min walk",
+            attraction: "Umeda Sky Building — 10 min walk",
         },
 
         reviews: [
@@ -545,16 +495,6 @@ export const roomsData = [
             "Garden",
         ],
 
-        host: {
-            name: "Daiki Suzuki",
-            avatar:
-                "https://i.pravatar.cc/150?img=53",
-            rating: 5.0,
-            reviewsCount: 79,
-            responseRate: "99%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -567,9 +507,9 @@ export const roomsData = [
             "Free cancellation up to 5 days before check-in.",
 
         locationDetails: {
-            neighborhood: "Kita",
-            city: "Sapporo",
-            country: "Japan",
+            station: "Kita Station — 8 min walk",
+            convenienceStore: "7-Eleven — 3 min walk",
+            attraction: "Odori Park — 12 min walk",
         },
 
         reviews: [
@@ -629,16 +569,6 @@ export const roomsData = [
             "Heating",
         ],
 
-        host: {
-            name: "Hana Watanabe",
-            avatar:
-                "https://i.pravatar.cc/150?img=29",
-            rating: 4.8,
-            reviewsCount: 61,
-            responseRate: "97%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -650,9 +580,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Chuo",
-            city: "Sapporo",
-            country: "Japan",
+            station: "Sapporo Station — 7 min walk",
+            convenienceStore: "FamilyMart — 2 min walk",
+            attraction: "Sapporo Clock Tower — 10 min walk",
         },
 
         reviews: [
@@ -712,16 +642,6 @@ export const roomsData = [
             "Washing Machine",
         ],
 
-        host: {
-            name: "Riku Tanaka",
-            avatar:
-                "https://i.pravatar.cc/150?img=61",
-            rating: 4.7,
-            reviewsCount: 48,
-            responseRate: "96%",
-            responseTime: "Within a few hours",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -733,9 +653,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Hakata",
-            city: "Fukuoka",
-            country: "Japan",
+            station: "Hakata Station — 5 min walk",
+            convenienceStore: "7-Eleven — 2 min walk",
+            attraction: "Canal City Hakata — 9 min walk",
         },
 
         reviews: [
@@ -796,16 +716,6 @@ export const roomsData = [
             "Heating",
         ],
 
-        host: {
-            name: "Mei Kobayashi",
-            avatar:
-                "https://i.pravatar.cc/150?img=43",
-            rating: 4.9,
-            reviewsCount: 67,
-            responseRate: "98%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -817,9 +727,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Tenjin",
-            city: "Fukuoka",
-            country: "Japan",
+            station: "Tenjin Station — 4 min walk",
+            convenienceStore: "FamilyMart — 2 min walk",
+            attraction: "Tenjin Underground Mall — 5 min walk",
         },
 
         reviews: [
@@ -880,16 +790,6 @@ export const roomsData = [
             "Elevator",
         ],
 
-        host: {
-            name: "Kaito Fujita",
-            avatar:
-                "https://i.pravatar.cc/150?img=52",
-            rating: 4.9,
-            reviewsCount: 94,
-            responseRate: "99%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -897,13 +797,12 @@ export const roomsData = [
             "No parties",
         ],
 
-        cancellationPolicy:
-            "Free cancellation up to 48 hours before check-in.",
+        cancellationPolicy: "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Minato Mirai",
-            city: "Yokohama",
-            country: "Japan",
+            station: "Minato Mirai Station — 5 min walk",
+            convenienceStore: "7-Eleven — 3 min walk",
+            attraction: "Yokohama Landmark Tower — 8 min walk",
         },
 
         reviews: [
@@ -963,16 +862,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Yuna Saito",
-            avatar:
-                "https://i.pravatar.cc/150?img=49",
-            rating: 4.6,
-            reviewsCount: 38,
-            responseRate: "95%",
-            responseTime: "Within a few hours",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -984,9 +873,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Naka",
-            city: "Yokohama",
-            country: "Japan",
+            station: "Kannai Station — 7 min walk",
+            convenienceStore: "Lawson — 2 min walk",
+            attraction: "Yokohama Chinatown — 12 min walk",
         },
 
         reviews: [
@@ -1047,16 +936,6 @@ export const roomsData = [
             "Washing Machine",
         ],
 
-        host: {
-            name: "Takumi Hayashi",
-            avatar:
-                "https://i.pravatar.cc/150?img=59",
-            rating: 4.8,
-            reviewsCount: 55,
-            responseRate: "97%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1068,9 +947,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Naka Ward",
-            city: "Nagoya",
-            country: "Japan",
+            station: "Sakae Station — 5 min walk",
+            convenienceStore: "7-Eleven — 2 min walk",
+            attraction: "Nagoya TV Tower — 8 min walk",
         },
 
         reviews: [
@@ -1130,16 +1009,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Mio Takahashi",
-            avatar:
-                "https://i.pravatar.cc/150?img=26",
-            rating: 4.7,
-            reviewsCount: 44,
-            responseRate: "96%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1151,11 +1020,10 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Sakae",
-            city: "Nagoya",
-            country: "Japan",
+            station: "Sakae Station — 4 min walk",
+            convenienceStore: "FamilyMart — 2 min walk",
+            attraction: "Oasis 21 — 6 min walk",
         },
-
         reviews: [
             {
                 id: 1,
@@ -1216,16 +1084,6 @@ export const roomsData = [
             "Hot Tub",
         ],
 
-        host: {
-            name: "Naoki Watanabe",
-            avatar:
-                "https://i.pravatar.cc/150?img=58",
-            rating: 5.0,
-            reviewsCount: 108,
-            responseRate: "99%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1238,9 +1096,9 @@ export const roomsData = [
             "Free cancellation up to 7 days before check-in.",
 
         locationDetails: {
-            neighborhood: "Gora",
-            city: "Hakone",
-            country: "Japan",
+            station: "Gora Station — 8 min walk",
+            convenienceStore: "Lawson — 5 min walk",
+            attraction: "Hakone Open-Air Museum — 12 min walk",
         },
 
         reviews: [
@@ -1301,16 +1159,6 @@ export const roomsData = [
             "TV",
         ],
 
-        host: {
-            name: "Akira Suzuki",
-            avatar:
-                "https://i.pravatar.cc/150?img=64",
-            rating: 4.9,
-            reviewsCount: 82,
-            responseRate: "98%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1323,9 +1171,9 @@ export const roomsData = [
             "Free cancellation up to 5 days before check-in.",
 
         locationDetails: {
-            neighborhood: "Gora",
-            city: "Hakone",
-            country: "Japan",
+            station: "Gora Station — 6 min walk",
+            convenienceStore: "FamilyMart — 4 min walk",
+            attraction: "Gora Park — 7 min walk",
         },
 
         reviews: [
@@ -1385,16 +1233,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Hiroshi Kato",
-            avatar:
-                "https://i.pravatar.cc/150?img=50",
-            rating: 4.8,
-            reviewsCount: 47,
-            responseRate: "97%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1406,9 +1244,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Nara Park",
-            city: "Nara",
-            country: "Japan",
+            station: "Kintetsu Nara Station — 8 min walk",
+            convenienceStore: "7-Eleven — 3 min walk",
+            attraction: "Nara Park — 5 min walk",
         },
 
         reviews: [
@@ -1469,16 +1307,6 @@ export const roomsData = [
             "Workspace",
         ],
 
-        host: {
-            name: "Yuki Fujimoto",
-            avatar:
-                "https://i.pravatar.cc/150?img=36",
-            rating: 4.9,
-            reviewsCount: 75,
-            responseRate: "98%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1490,9 +1318,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Harborland",
-            city: "Kobe",
-            country: "Japan",
+            station: "Harborland Station — 5 min walk",
+            convenienceStore: "Lawson — 2 min walk",
+            attraction: "Kobe Harborland — 4 min walk",
         },
 
         reviews: [
@@ -1553,16 +1381,6 @@ export const roomsData = [
             "Washing Machine",
         ],
 
-        host: {
-            name: "Masato Inoue",
-            avatar:
-                "https://i.pravatar.cc/150?img=54",
-            rating: 4.7,
-            reviewsCount: 39,
-            responseRate: "95%",
-            responseTime: "Within a few hours",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1574,9 +1392,9 @@ export const roomsData = [
             "Free cancellation up to 48 hours before check-in.",
 
         locationDetails: {
-            neighborhood: "Naka Ward",
-            city: "Hiroshima",
-            country: "Japan",
+            station: "Hiroshima Station — 8 min walk",
+            convenienceStore: "7-Eleven — 3 min walk",
+            attraction: "Peace Memorial Park — 12 min walk",
         },
 
         reviews: [
@@ -1640,16 +1458,6 @@ export const roomsData = [
             "Beach Access",
         ],
 
-        host: {
-            name: "Sakura Yamamoto",
-            avatar:
-                "https://i.pravatar.cc/150?img=30",
-            rating: 5.0,
-            reviewsCount: 112,
-            responseRate: "99%",
-            responseTime: "Within an hour",
-        },
-
         houseRules: [
             "Check-in after 3:00 PM",
             "Check-out before 11:00 AM",
@@ -1662,9 +1470,9 @@ export const roomsData = [
             "Free cancellation up to 7 days before check-in.",
 
         locationDetails: {
-            neighborhood: "Naha",
-            city: "Naha",
-            country: "Japan",
+            station: "Naha Bus Terminal — 7 min walk",
+            convenienceStore: "FamilyMart — 2 min walk",
+            attraction: "Kokusai Street — 6 min walk",
         },
 
         reviews: [
