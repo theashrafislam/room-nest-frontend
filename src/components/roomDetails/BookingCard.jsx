@@ -18,14 +18,16 @@ const BookingCard = ({ room }) => {
 
     const calendarRef = useRef(null);
 
-// DATE HELPERS
+    /* =========================================
+       DATE HELPERS
+    ========================================= */
 
     const formatDate = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
 
-        return `$ {year}-$ {month}-$ {day}`;
+        return `${year}-${month}-${day}`;
     };
 
     const parseDate = (value) => {
@@ -55,8 +57,9 @@ const BookingCard = ({ room }) => {
         });
     };
 
-
-    // nights 
+    /* =========================================
+       NIGHTS
+    ========================================= */
 
     const nights = useMemo(() => {
         if (!checkIn || !checkOut) return 0;
@@ -75,7 +78,9 @@ const BookingCard = ({ room }) => {
 
     const total = nights > 0 ? room.price * nights : room.price;
 
-    // calendar days 
+    /* =========================================
+       CALENDAR DAYS
+    ========================================= */
 
     const calendarDays = useMemo(() => {
         const year = currentMonth.getFullYear();
@@ -136,7 +141,9 @@ const BookingCard = ({ room }) => {
         }
     );
 
-    // month navigation 
+    /* =========================================
+       MONTH NAVIGATION
+    ========================================= */
 
     const previousMonth = () => {
         setCurrentMonth(
@@ -158,7 +165,9 @@ const BookingCard = ({ room }) => {
         );
     };
 
-// date status 
+    /* =========================================
+       DATE STATUS
+    ========================================= */
 
     const isPastDate = (date) => {
         return date < today;
@@ -200,8 +209,9 @@ const BookingCard = ({ room }) => {
         return false;
     };
 
-
-    // open calendar 
+    /* =========================================
+       OPEN CALENDAR
+    ========================================= */
 
     const openPicker = (picker) => {
         setActivePicker(picker);
@@ -246,7 +256,9 @@ const BookingCard = ({ room }) => {
         );
     };
 
-    // date selection 
+    /* =========================================
+       DATE SELECTION
+    ========================================= */
 
     const handleDateSelect = (date) => {
         const selectedDate = formatDate(date);
@@ -279,8 +291,9 @@ const BookingCard = ({ room }) => {
         }
     };
 
-
-    // close on outside click 
+    /* =========================================
+       CLOSE ON OUTSIDE CLICK
+    ========================================= */
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -305,7 +318,9 @@ const BookingCard = ({ room }) => {
         };
     }, []);
 
-    // guest controls 
+    /* =========================================
+       GUEST CONTROLS
+    ========================================= */
 
     const decreaseGuests = () => {
         setGuests((prev) => Math.max(1, prev - 1));
@@ -316,7 +331,6 @@ const BookingCard = ({ room }) => {
             Math.min(room.guests, prev + 1)
         );
     };
-
 
 
     return (
@@ -345,7 +359,6 @@ const BookingCard = ({ room }) => {
                 </div>
             </div>
 
-
             {/* date picker  */}
 
             <div
@@ -361,11 +374,10 @@ const BookingCard = ({ room }) => {
                             onClick={() =>
                                 openPicker("checkIn")
                             }
-                            className={`min-w-0 border-r border-border px-3 py-2.5 text-left transition-colors duration-300 hover:bg-background $ {
-                                activePicker === "checkIn"
+                            className={`min-w-0 border-r border-border px-3 py-2.5 text-left transition-colors duration-300 hover:bg-background ${activePicker === "checkIn"
                                     ? "bg-background"
                                     : ""
-                            }`}
+                                }`}
                         >
                             <div className="flex items-center gap-1.5">
                                 <FiCalendar className="shrink-0 text-xs text-primary" />
@@ -376,11 +388,10 @@ const BookingCard = ({ room }) => {
                             </div>
 
                             <p
-                                className={`mt-1.5 truncate text-xs font-semibold sm:text-sm $ {
-                                    checkIn
+                                className={`mt-1.5 truncate text-xs font-semibold sm:text-sm ${checkIn
                                         ? "text-text"
                                         : "text-muted"
-                                }`}
+                                    }`}
                             >
                                 {formatDisplayDate(
                                     checkIn
@@ -395,11 +406,10 @@ const BookingCard = ({ room }) => {
                             onClick={() =>
                                 openPicker("checkOut")
                             }
-                            className={`min-w-0 px-3 py-2.5 text-left transition-colors duration-300 hover:bg-background $ {
-                                activePicker === "checkOut"
+                            className={`min-w-0 px-3 py-2.5 text-left transition-colors duration-300 hover:bg-background ${activePicker === "checkOut"
                                     ? "bg-background"
                                     : ""
-                            }`}
+                                }`}
                         >
                             <div className="flex items-center gap-1.5">
                                 <FiCalendar className="shrink-0 text-xs text-primary" />
@@ -410,11 +420,10 @@ const BookingCard = ({ room }) => {
                             </div>
 
                             <p
-                                className={`mt-1.5 truncate text-xs font-semibold sm:text-sm $ {
-                                    checkOut
+                                className={`mt-1.5 truncate text-xs font-semibold sm:text-sm ${checkOut
                                         ? "text-text"
                                         : "text-muted"
-                                }`}
+                                    }`}
                             >
                                 {formatDisplayDate(
                                     checkOut
@@ -475,7 +484,7 @@ const BookingCard = ({ room }) => {
                                 "S",
                             ].map((day, index) => (
                                 <div
-                                    key={`$ {day}-$ {index}`}
+                                    key={`${day}-${index}`}
                                     className="py-1.5 text-center text-[9px] font-semibold text-muted sm:text-[10px]"
                                 >
                                     {day}
@@ -491,7 +500,7 @@ const BookingCard = ({ room }) => {
                                     {
                                         date,
                                         currentMonth:
-                                            isCurrentMonth,
+                                        isCurrentMonth,
                                     },
                                     index
                                 ) => {
@@ -524,14 +533,13 @@ const BookingCard = ({ room }) => {
 
                                     return (
                                         <div
-                                            key={`$ {formatDate(
+                                            key={`${formatDate(
                                                 date
-                                            )}-$ {index}`}
-                                            className={`relative flex h-8 items-center justify-center sm:h-9 $ {
-                                                range
+                                            )}-${index}`}
+                                            className={`relative flex h-8 items-center justify-center sm:h-9 ${range
                                                     ? "bg-primary/10"
                                                     : ""
-                                            }`}
+                                                }`}
                                         >
                                             <button
                                                 type="button"
@@ -545,33 +553,28 @@ const BookingCard = ({ room }) => {
                                                 }
                                                 className={`
                                                     flex h-7 w-7 items-center justify-center rounded-lg text-[10px] font-medium transition-all duration-200 sm:h-8 sm:w-8 sm:text-xs
-                                                    $ {
-                                                        selected
-                                                            ? "bg-primary font-semibold text-white shadow-sm"
-                                                            : ""
+                                                    ${selected
+                                                        ? "bg-primary font-semibold text-white shadow-sm"
+                                                        : ""
                                                     }
-                                                    $ {
-                                                        !selected &&
+                                                    ${!selected &&
                                                         !disabled &&
                                                         isCurrentMonth
-                                                            ? "text-text hover:bg-primary/10 hover:text-primary"
-                                                            : ""
+                                                        ? "text-text hover:bg-primary/10 hover:text-primary"
+                                                        : ""
                                                     }
-                                                    $ {
-                                                        !isCurrentMonth
-                                                            ? "text-muted/25"
-                                                            : ""
+                                                    ${!isCurrentMonth
+                                                        ? "text-muted/25"
+                                                        : ""
                                                     }
-                                                    $ {
-                                                        disabled
-                                                            ? "cursor-not-allowed text-muted/20"
-                                                            : ""
+                                                    ${disabled
+                                                        ? "cursor-not-allowed text-muted/20"
+                                                        : ""
                                                     }
-                                                    $ {
-                                                        isToday &&
+                                                    ${isToday &&
                                                         !selected
-                                                            ? "font-bold text-primary ring-1 ring-primary/30"
-                                                            : ""
+                                                        ? "font-bold text-primary ring-1 ring-primary/30"
+                                                        : ""
                                                     }
                                                 `}
                                             >
@@ -608,7 +611,6 @@ const BookingCard = ({ room }) => {
                     </div>
                 )}
             </div>
-
 
             {/* guests  */}
 
@@ -673,7 +675,6 @@ const BookingCard = ({ room }) => {
             <p className="mt-2 text-center text-[10px] text-muted sm:text-xs">
                 You won't be charged yet
             </p>
-
 
             {/* price summary  */}
 
