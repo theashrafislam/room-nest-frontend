@@ -115,7 +115,7 @@ const RoomCard = ({ room }) => {
         <div className="flex items-center justify-between gap-4">
           <div>
             <span className="text-xl font-bold text-primary">
-              ৳{room.price.toLocaleString()}
+              $ {room.price.toLocaleString()}
             </span>
 
             <span className="ml-1 text-sm text-muted">/ night</span>
