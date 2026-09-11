@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { app } from '../firebase/firebase.config';
 
 
@@ -42,9 +42,15 @@ function FirebaseProvider({ children }) {
     }
 
     // profile update setup 
-    const profileUpdate = (displayName) => {
-        return updateProfile(auth.currentUser, {displayName, photoURL: "hello"})
+    const profileUpdate =  async  (displayName) => {
+        console.log(displayName)
+        console.log("Current User:", auth.currentUser);
+        return await updateProfile(auth.currentUser, {
+            displayName: displayName,
+            photoURL: "hello"
+        });
     }
+
 
 
 

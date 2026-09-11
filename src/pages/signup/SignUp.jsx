@@ -21,7 +21,7 @@ const SignUp = () => {
     const email = target.email.value;
     const password = target.password.value;
     const confirmPassword = target.confirmPassword.value;
-    const fullName  = target.fullName.value;
+    const displayName = target.fullName.value;
     // const photoURL = target.photoURL.value;
 
     // console.log(fullName)
@@ -36,13 +36,20 @@ const SignUp = () => {
       .then((result) => {
         if (result?.user?.uid) {
           console.log('hello ia m ok')
-          profileUpdate(fullName)
-            .then((result) => {
-              console.log(result)
+          profileUpdate(displayName)
+            .then(() => {
+              console.log("Profile updated successfully!");
+
+              toast.success("Account created successfully! Please login.");
+
+              // এখানে চাইলে logout + navigate করবে
+              // logOut();
+              // navigate("/sign-in");
             })
+
           // logOut();
-          toast.success("Account created successfully! Please login.");
-          navigate("/sign-in");
+          // toast.success("Account created successfully! Please login.");
+          // navigate("/sign-in");
         }
         // console.log(result);
       })

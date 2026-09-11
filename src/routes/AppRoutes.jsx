@@ -11,6 +11,9 @@ import HelpCenter from "../pages/support/HelpCenter";
 import PrivacyPolicy from "../pages/support/PrivacyPolicy";
 import TermsConditions from "../pages/support/TermsConditions";
 import CancellationPolicy from "../pages/support/CancellationPolicy";
+import Rooms from "../pages/rooms/Rooms";
+
+const url = 'https://jsonplaceholder.typicode.com/posts';
 
 
 const router = createBrowserRouter([
@@ -22,6 +25,7 @@ const router = createBrowserRouter([
             {index: true, Component: Home},
             {path: '/contact', Component: Contact},
             {path: '/about', Component: About},
+            {path: '/rooms', Component: Rooms, loader: () => fetch(url)},
 
 
             {path: '/help', Component: HelpCenter},
