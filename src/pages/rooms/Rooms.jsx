@@ -144,6 +144,8 @@ const roomsData = [
 ];
 
 const Rooms = () => {
+
+    const [searchInput, setSearchInput] = useState("");
     const [search, setSearch] = useState("");
 
     const [sortBy, setSortBy] = useState("recommended");
@@ -290,10 +292,21 @@ const Rooms = () => {
 
                                     <input
                                         type="text"
-                                        value={search}
-                                        onChange={(e) =>
-                                            setSearch(e.target.value)
-                                        }
+                                        value={searchInput}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+
+                                            setSearchInput(value);
+
+                                            if (value.trim() === "") {
+                                                setSearch("");
+                                            }
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                setSearch(searchInput);
+                                            }
+                                        }}
                                         placeholder="Search rooms, locations..."
                                         className="h-12 w-full rounded-xl border border-border bg-card pl-11 pr-4 text-sm text-text outline-none transition-all duration-300 placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10"
                                     />
@@ -303,7 +316,7 @@ const Rooms = () => {
                                 <div className="flex h-12 items-center gap-3 rounded-xl border border-border bg-card px-4">
                                     <FiMapPin className="shrink-0 text-lg text-primary" />
 
-                                    <div className="hidden min-w-[120px] sm:block">
+                                    <div className=" min-w-[120px] sm:block">
                                         <p className="text-xs text-muted">
                                             Location
                                         </p>
@@ -318,7 +331,7 @@ const Rooms = () => {
                                 <div className="flex h-12 items-center gap-3 rounded-xl border border-border bg-card px-4">
                                     <FiUsers className="shrink-0 text-lg text-primary" />
 
-                                    <div className="hidden min-w-[100px] sm:block">
+                                    <div className="min-w-[100px] sm:block">
                                         <p className="text-xs text-muted">
                                             Guests
                                         </p>
@@ -331,6 +344,7 @@ const Rooms = () => {
 
                                 {/* Search Button */}
                                 <button
+                                    onClick={() => setSearch(searchInput)}
                                     type="button"
                                     className="flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary-hover hover:shadow-md"
                                 >
