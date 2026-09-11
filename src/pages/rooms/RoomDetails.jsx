@@ -12,6 +12,7 @@ import Reviews from "../../components/roomDetails/Reviews";
 import BookingCard from "../../components/roomDetails/BookingCard";
 
 import { roomsData } from "../../data/roomsData";
+import CancellationPolicy from "../../components/roomDetails/CancellationPolicy";
 
 
 
@@ -73,27 +74,22 @@ const RoomDetails = () => {
 
                         <RoomInfo room={room} />
 
-                        <RoomHighlights
-                            highlights={room.highlights}
-                        />
+                        <RoomHighlights highlights={room.highlights}/>
 
-                        <RoomAmenities
-                            amenities={room.amenities}
-                        />
+                        <RoomAmenities amenities={room.amenities}/>
 
                         {/* Rules + Location */}
                         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
 
-                            <HouseRules rules={room.houseRules}/>
+                            <HouseRules rules={room.houseRules} />
 
-                            <LocationInfo
-                                location={room.location}
-                                details={room.locationDetails}
-                            />
+                            <LocationInfo location={room.location} details={room.locationDetails}/>
 
                         </div>
 
-                        <Reviews reviews = {room?.reviews}/>
+                        <CancellationPolicy policy={room?.cancellationPolicy} />
+
+                        <Reviews reviews={room?.reviews} />
 
                     </div>
 
