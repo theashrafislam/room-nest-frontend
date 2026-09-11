@@ -60,7 +60,7 @@ const HouseRules = ({ rules }) => {
                     return (
                         <div
                             key={`${rule}-${index}`}
-                            className={`flex items-center gap-4 p-4 sm:p-5 ${
+                            className={`flex items-center gap-4 p-5 ${
                                 index !== rules.length - 1
                                     ? "border-b border-border"
                                     : ""
