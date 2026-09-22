@@ -1,8 +1,8 @@
 import React from 'react'
 
-function PrivateRoute() {
+function PrivateRoute({children}) {
   return (
-    <div>PrivateRoute</div>
+    <div>This is a private Route Or This is a private page.</div>
   )
 }
 
