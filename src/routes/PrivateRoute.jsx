@@ -10,7 +10,7 @@ function PrivateRoute() {
 
 
   if(loading){
-    return <LoadingSpinner fullScreen message="Finding your room..."/>
+    return <LoadingSpinner fullScreen message="Preparing your room details..."/>
   }
 
   if (!user) {
