@@ -1,34 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md", }) => {
+const LoadingSpinner = ({
+    fullScreen = false,
+    message = "Loading...",
+    size = "md",
+}) => {
 
     const sizes = {
         sm: {
             wrapper: "w-10 h-10",
             ring: "w-8 h-8",
-            dot: "w-1 h-1",
         },
         md: {
             wrapper: "w-14 h-14",
             ring: "w-11 h-11",
-            dot: "w-1.5 h-1.5",
         },
         lg: {
             wrapper: "w-18 h-18",
             ring: "w-14 h-14",
-            dot: "w-2 h-2",
         },
     };
 
     const currentSize = sizes[size] || sizes.md;
 
+    // Prevent background page scrolling when fullscreen loader is active
+    useEffect(() => {
+        if (!fullScreen) return;
+
+        const originalOverflow = document.body.style.overflow;
+
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            document.body.style.overflow = originalOverflow;
+        };
+    }, [fullScreen]);
+
     return (
         <div
             className={`
                 flex items-center justify-center
-                ${fullScreen
-                    ? "fixed inset-0 z-50 min-h-dvh bg-background/90 backdrop-blur-md"
-                    : "w-full py-12"
+                ${
+                    fullScreen
+                        ? "fixed inset-0 z-[9999] h-dvh w-full bg-background"
+                        : "w-full py-12"
                 }
             `}
         >
@@ -42,16 +57,16 @@ const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md
                     `}
                 >
 
-                    {/* Outer rotating ring */}
+                    {/* Outer Ring */}
                     <div
-                        className={`
+                        className="
                             absolute inset-0
                             rounded-full
                             border-2 border-border
-                        `}
+                        "
                     />
 
-                    {/* Primary rotating ring */}
+                    {/* Primary Rotating Ring */}
                     <div
                         className={`
                             ${currentSize.ring}
@@ -65,7 +80,7 @@ const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md
                         `}
                     />
 
-                    {/* Amber accent */}
+                    {/* Amber Center */}
                     <div
                         className="
                             absolute
@@ -77,7 +92,7 @@ const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md
                         "
                     />
 
-                    {/* Inner subtle ring */}
+                    {/* Inner Pulse Ring */}
                     <div
                         className="
                             absolute
@@ -90,7 +105,7 @@ const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md
                     />
                 </div>
 
-                {/* Loading message */}
+                {/* Loading Message */}
                 {message && (
                     <div className="flex flex-col items-center gap-2">
 
@@ -98,11 +113,36 @@ const LoadingSpinner = ({ fullScreen = false, message = "Loading...", size = "md
                             {message}
                         </p>
 
-                        {/* Animated loading dots */}
+                        {/* Loading Dots */}
                         <div className="flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
-                            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
-                            <span className="h-1.5 w-1.5 rounded-full bg-secondary animate-bounce" />
+                            <span
+                                className="
+                                    h-1.5 w-1.5
+                                    rounded-full
+                                    bg-primary
+                                    animate-bounce
+                                    [animation-delay:-0.3s]
+                                "
+                            />
+
+                            <span
+                                className="
+                                    h-1.5 w-1.5
+                                    rounded-full
+                                    bg-primary
+                                    animate-bounce
+                                    [animation-delay:-0.15s]
+                                "
+                            />
+
+                            <span
+                                className="
+                                    h-1.5 w-1.5
+                                    rounded-full
+                                    bg-secondary
+                                    animate-bounce
+                                "
+                            />
                         </div>
 
                     </div>

@@ -521,7 +521,7 @@ const Rooms = () => {
                                         </p>
 
                                         <p className="text-sm font-semibold text-text">
-                                            Dhaka
+                                            Japan
                                         </p>
                                     </div>
                                 </div>
