@@ -43,7 +43,7 @@ const SignUp = () => {
 
               toast.success("Account created successfully! Please login.");
 
-              // এখানে চাইলে logout + navigate করবে
+              // এখানে চাইলে logout + navigate
               // logOut();
               // navigate("/sign-in");
             })
