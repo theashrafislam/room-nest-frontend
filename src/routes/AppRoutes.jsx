@@ -28,10 +28,9 @@ const router = createBrowserRouter([
             {path: '/contact', Component: Contact},
             {path: '/about', Component: About},
             {path: '/rooms', Component: Rooms, loader: () => fetch(url)},
-            // {path: '/rooms/:id', Component: RoomDetails},
 
             // Private routes
-            {element: <PrivateRoute/>, children: [{path: "/rooms/:id", Component: RoomDetails}]},
+            {element: <PrivateRoute/>, children: [{path: "/room/:id", Component: RoomDetails}]},
 
 
             {path: '/help', Component: HelpCenter},

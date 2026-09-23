@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import {
   FiUser,
@@ -14,6 +14,7 @@ const SignUp = () => {
 
   const { createUser, loginWithGoogle, logOut, profileUpdate } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -82,6 +83,7 @@ const SignUp = () => {
     loginWithGoogle()
       .then((result) => {
         if (result?.user?.uid) {
+          navigate(location?.state || '/')
           toast.success("Welcome! You have signed in with Google successfully.");
         }
 
@@ -205,6 +207,7 @@ const SignUp = () => {
                     <input
                       id="name"
                       name="fullName"
+                      required
                       type="text"
                       placeholder="Your name"
                       className={`w-full rounded-xl border bg-card py-3 pl-11 pr-4 text-text outline-none transition duration-300 placeholder:text-muted focus:ring-4 focus:ring-primary/10 `}

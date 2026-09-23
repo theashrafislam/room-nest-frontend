@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FaGoogle } from "react-icons/fa";
 import { FiMail, FiLock } from "react-icons/fi";
 import Button from "../../components/shared/Button";
@@ -10,6 +10,7 @@ const SignIn = () => {
 
   const { loginUser, loginWithGoogle } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const SignIn = () => {
       .then((result) => {
         // console.log(result)
         if (result?.user?.uid) {
-          navigate('/')
+          navigate(location?.state || '/')
           toast.success("Welcome back! You have logged in successfully.");
           target.reset();
         }
@@ -57,7 +58,7 @@ const SignIn = () => {
     loginWithGoogle()
       .then((result) => {
         if (result?.user?.uid) {
-           navigate('/')
+           navigate(location?.state || '/')
           toast.success("Welcome! You have signed in with Google successfully.");
         }
 

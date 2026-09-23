@@ -155,7 +155,7 @@ const RoomCard = ({ room }) => {
                 {/* Title */}
 
                 <Link
-                    to={`/rooms/${room.id}`}
+                    to={`/room/${room.id}`}
                     className="block"
                 >
                     <h3 className="mt-2 line-clamp-1 text-lg font-bold text-text transition-colors duration-300 group-hover:text-primary">
@@ -273,7 +273,7 @@ const RoomCard = ({ room }) => {
                     {/* View Details */}
 
                     <Link
-                        to={`/rooms/${room.id}`}
+                        to={`/room/${room.id}`}
                         className="flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary transition-all duration-300 hover:gap-2.5"
                     >
                         View
