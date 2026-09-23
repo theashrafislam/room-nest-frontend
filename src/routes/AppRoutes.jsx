@@ -24,23 +24,31 @@ const router = createBrowserRouter([
         element: <RootLayout />,
         errorElement: <NotFound />,
         children: [
-            {index: true, Component: Home},
-            {path: '/contact', Component: Contact},
-            {path: '/about', Component: About},
-            {path: '/rooms', Component: Rooms, loader: () => fetch(url)},
+            { index: true, Component: Home },
+            { path: '/contact', Component: Contact },
+            { path: '/about', Component: About },
+            { path: '/rooms', Component: Rooms, loader: () => fetch(url) },
+            {
+                path: '/room/:id',
+                element: (
+                    <PrivateRoute>
+                        <RoomDetails />
+                    </PrivateRoute>
+                )
+            },
 
             // Private routes
-            {element: <PrivateRoute/>, children: [{path: "/room/:id", Component: RoomDetails}]},
+            // {element: <PrivateRoute/>, children: [{path: "/room/:id", Component: RoomDetails}]},
 
 
-            {path: '/help', Component: HelpCenter},
-            {path: '/privacy', Component: PrivacyPolicy},
-            {path: '/terms', Component: TermsConditions},
-            {path: '/cancellation', Component: CancellationPolicy}
+            { path: '/help', Component: HelpCenter },
+            { path: '/privacy', Component: PrivacyPolicy },
+            { path: '/terms', Component: TermsConditions },
+            { path: '/cancellation', Component: CancellationPolicy }
         ]
     },
-    {path: '/sign-in', element: <SignIn />},
-    {path: '/sign-up', element: <SignUp />}
+    { path: '/sign-in', element: <SignIn /> },
+    { path: '/sign-up', element: <SignUp /> }
 ]);
 
 
