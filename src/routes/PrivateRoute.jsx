@@ -1,15 +1,16 @@
 import React from 'react'
 import useAuth from '../hooks/useAuth'
-import { Navigate, useLocation } from 'react-router';
+import { Navigate, Outlet, useLocation } from 'react-router';
+import LoadingSpinner from '../components/shared/LoadingSpinner';
 
-function PrivateRoute({ children }) {
+function PrivateRoute() {
 
   const { user, loading } = useAuth();
   const location = useLocation();
 
 
   if(loading){
-    return <h1 className="text-4xl">Loading............</h1>
+    return <LoadingSpinner fullScreen message="Finding your room..."/>
   }
 
   if (!user) {
@@ -17,7 +18,7 @@ function PrivateRoute({ children }) {
   }
 
   return (
-    <div>{children}</div>
+    <div><Outlet /></div>
   )
 }
 
