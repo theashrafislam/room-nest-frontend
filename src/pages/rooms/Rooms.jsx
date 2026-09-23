@@ -13,6 +13,7 @@ import RoomFilters from "../../components/rooms/RoomFilters";
 import RoomPagination from "../../components/rooms/RoomPagination";
 
 import { roomsData } from "../../data/roomsData";
+import { Helmet } from "react-helmet-async";
 
 
 // const roomsData = [
@@ -451,6 +452,10 @@ const Rooms = () => {
 
     return (
         <main className="min-h-screen bg-background">
+
+            <Helmet>
+                <title>RoomNest | Find Your Perfect Room</title>
+            </Helmet>
 
             {/* hero section   */}
 

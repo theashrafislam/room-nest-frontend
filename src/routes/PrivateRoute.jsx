@@ -17,9 +17,7 @@ function PrivateRoute() {
     return <Navigate to={'/sign-in'} state={location?.pathname || '/'}/>
   }
 
-  return (
-    <div><Outlet /></div>
-  )
+  return <Outlet />
 }
 
 export default PrivateRoute

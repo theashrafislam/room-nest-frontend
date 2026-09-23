@@ -5,17 +5,20 @@ import { RouterProvider } from "react-router/dom";
 import router from './routes/AppRoutes';
 import { Toaster } from 'react-hot-toast';
 import FirebaseProvider from './authProvider/FirebaseProvider';
+import { HelmetProvider } from 'react-helmet-async';
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <FirebaseProvider>
-      <RouterProvider router={router} />
-      <Toaster
-        toastOptions={{
-          duration: 3000,
-        }}
-      />
+      <HelmetProvider>
+        <RouterProvider router={router} />
+        <Toaster
+          toastOptions={{
+            duration: 3000,
+          }}
+        />
+      </HelmetProvider>
     </FirebaseProvider>
   </StrictMode>,
 )

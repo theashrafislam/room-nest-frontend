@@ -13,6 +13,7 @@ import BookingCard from "../../components/roomDetails/BookingCard";
 
 import { roomsData } from "../../data/roomsData";
 import CancellationPolicy from "../../components/roomDetails/CancellationPolicy";
+import { Helmet } from "react-helmet-async";
 
 
 
@@ -24,10 +25,16 @@ const RoomDetails = () => {
     );
 
 
+
     // Room not found
     if (!room) {
         return (
             <main className="min-h-screen bg-background px-4 py-16">
+                
+                <Helmet>
+                    <title>Room Not Found | RoomNest</title>
+                </Helmet>
+
                 <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-2xl border border-border bg-card px-6 py-16 text-center shadow-sm">
                     <h1 className="text-2xl font-bold text-text sm:text-3xl">
                         Room not found
@@ -52,6 +59,12 @@ const RoomDetails = () => {
 
     return (
         <main className="min-h-screen bg-background">
+
+            <Helmet>
+                <title>{room?.title ? `${room.title} | RoomNest` : 'RoomNest | Room Details'}</title>
+            </Helmet>
+
+
             <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 lg:px-0">
 
                 {/* Back */}
@@ -74,16 +87,16 @@ const RoomDetails = () => {
 
                         <RoomInfo room={room} />
 
-                        <RoomHighlights highlights={room.highlights}/>
+                        <RoomHighlights highlights={room.highlights} />
 
-                        <RoomAmenities amenities={room.amenities}/>
+                        <RoomAmenities amenities={room.amenities} />
 
                         {/* Rules + Location */}
                         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
 
                             <HouseRules rules={room.houseRules} />
 
-                            <LocationInfo location={room.location} details={room.locationDetails}/>
+                            <LocationInfo location={room.location} details={room.locationDetails} />
 
                         </div>
 
