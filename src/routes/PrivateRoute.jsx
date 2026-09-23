@@ -4,15 +4,20 @@ import { Navigate, useLocation } from 'react-router';
 
 function PrivateRoute({ children }) {
 
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
+
+
+  // if(loading){
+  //   return <h1 className="text-4xl">Loading............</h1>
+  // }
 
   if (!user) {
     return <Navigate to={'/sign-in'} state={location?.pathname || '/'}/>
   }
 
   return (
-    <div>This is a private Route Or This is a private page.</div>
+    <div>{children}</div>
   )
 }
 
