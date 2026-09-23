@@ -9,6 +9,7 @@ import {
 import Button from "../../components/shared/Button";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
 
@@ -118,6 +119,11 @@ const SignUp = () => {
 
   return (
     <section className="min-h-screen bg-background">
+
+      <Helmet>
+        <title>RoomNest | Create Your RoomNest Account</title>
+      </Helmet>
+
       <div className="grid min-h-screen lg:grid-cols-2">
 
 

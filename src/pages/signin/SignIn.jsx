@@ -4,13 +4,14 @@ import { FiMail, FiLock } from "react-icons/fi";
 import Button from "../../components/shared/Button";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 
 const SignIn = () => {
 
   const { loginUser, loginWithGoogle } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +59,7 @@ const SignIn = () => {
     loginWithGoogle()
       .then((result) => {
         if (result?.user?.uid) {
-           navigate(location?.state || '/')
+          navigate(location?.state || '/')
           toast.success("Welcome! You have signed in with Google successfully.");
         }
 
@@ -93,6 +94,10 @@ const SignIn = () => {
 
   return (
     <section className="min-h-screen bg-background">
+      <Helmet>
+        <title>RoomNest | Sign In to Continue</title>
+      </Helmet>
+
       <div className="min-h-screen grid lg:grid-cols-2">
 
         {/* Branding Section */}
