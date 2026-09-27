@@ -12,6 +12,10 @@ import {
 const CancellationPolicy = () => {
   return (
     <main className="min-h-screen bg-background text-text">
+
+      <Helmet>
+        <title>Cancellation Policy | RoomNest</title>
+      </Helmet>
       {/* Header */}
 
       <section className="border-b border-border bg-card">

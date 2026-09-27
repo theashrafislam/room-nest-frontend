@@ -69,6 +69,10 @@ const HelpCenter = () => {
 
     return (
         <main className="min-h-screen bg-background text-text">
+
+            <Helmet>
+                <title>Help Center | RoomNest</title>
+            </Helmet>
             {/* Hero */}
 
             <section className="bg-primary">

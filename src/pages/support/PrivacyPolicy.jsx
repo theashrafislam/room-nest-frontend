@@ -11,6 +11,10 @@ import {
 const PrivacyPolicy = () => {
   return (
     <main className="min-h-screen bg-background text-text">
+
+      <Helmet>
+        <title>Privacy Policy | RoomNest</title>
+      </Helmet>
       {/* Header */}
 
       <section className="border-b border-border bg-card">

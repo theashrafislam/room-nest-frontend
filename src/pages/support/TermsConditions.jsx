@@ -12,6 +12,10 @@ import {
 const TermsConditions = () => {
   return (
     <main className="min-h-screen bg-background text-text">
+
+      <Helmet>
+        <title>Terms & Conditions | RoomNest</title>
+      </Helmet>
       {/* Header */}
 
       <section className="border-b border-border bg-card">

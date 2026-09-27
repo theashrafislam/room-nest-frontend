@@ -57,6 +57,10 @@ const Contact = () => {
   return (
     <main className="min-h-screen bg-background text-text">
 
+      <Helmet>
+        <title>Contact Us | RoomNest</title>
+      </Helmet>
+
       {/* hero section  */}
 
       <section className="bg-background">
