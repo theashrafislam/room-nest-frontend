@@ -7,6 +7,7 @@ import {
   FiMail,
   FiArrowLeft,
 } from "react-icons/fi";
+import { Helmet } from "react-helmet-async";
 
 const PrivacyPolicy = () => {
   return (

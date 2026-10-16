@@ -8,6 +8,7 @@ import {
   FiCheckCircle,
   FiArrowLeft,
 } from "react-icons/fi";
+import { Helmet } from "react-helmet-async";
 
 const CancellationPolicy = () => {
   return (
