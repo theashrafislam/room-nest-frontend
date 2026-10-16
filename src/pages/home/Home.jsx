@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import { Helmet } from 'react-helmet-async';
 import HomeHero from '../../components/home/HomeHero';
+import ExploreByCategory from '../../components/home/ExploreByCategory';
 
 export default function Home() {
 
@@ -21,6 +22,9 @@ export default function Home() {
 
             {/* hero section   */}
             <HomeHero />
+
+            {/* Explore by Category */}
+            <ExploreByCategory />
 
 
         </div>
