@@ -14,6 +14,7 @@ import {
 } from "react-icons/fi";
 
 import Button from "../../components/shared/Button";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
     return (

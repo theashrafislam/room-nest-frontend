@@ -2,6 +2,7 @@ import React from 'react'
 import toast from 'react-hot-toast';
 import useAuth from '../../hooks/useAuth';
 import { Helmet } from 'react-helmet-async';
+import HomeHero from '../../components/home/HomeHero';
 
 export default function Home() {
 
@@ -17,8 +18,11 @@ export default function Home() {
                 <title>RoomNest | Luxury Room Rental</title>
                 <link rel="canonical" href="http://localhost:5173/" />
             </Helmet>
-            <button onClick={notify}>Make me a toast</button>
-            <p className='text-lg text-red-500'>Hello I am home page okay!!</p>
+
+            {/* hero section   */}
+            <HomeHero />
+
+
         </div>
     )
 }
