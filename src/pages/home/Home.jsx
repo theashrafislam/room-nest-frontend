@@ -4,6 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { Helmet } from 'react-helmet-async';
 import HomeHero from '../../components/home/HomeHero';
 import ExploreByCategory from '../../components/home/ExploreByCategory';
+import FeaturedRooms from '../../components/home/FeaturedRooms';
 
 export default function Home() {
 
@@ -25,6 +26,9 @@ export default function Home() {
 
             {/* Explore by Category */}
             <ExploreByCategory />
+
+            {/* Featured Rooms */}
+            <FeaturedRooms />
 
 
         </div>
