@@ -6,6 +6,7 @@ import HomeHero from '../../components/home/HomeHero';
 import ExploreByCategory from '../../components/home/ExploreByCategory';
 import FeaturedRooms from '../../components/home/FeaturedRooms';
 import PopularDestinations from '../../components/home/PopularDestinations';
+import WhyChooseRoomNest from '../../components/home/WhyChooseRoomNest';
 
 export default function Home() {
 
@@ -34,6 +35,8 @@ export default function Home() {
             {/* Popular Destinations */}
             <PopularDestinations />
 
+            {/* Why Choose RoomNest */}
+            <WhyChooseRoomNest />
 
         </div>
     )
