@@ -20,20 +20,21 @@ const FeaturedRooms = () => {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
 
-    // Show up to six featured rooms.
+    // Display up to six featured rooms.
     const featuredRooms = roomsData.slice(0, 6);
 
-    // Keep arrow buttons synchronized with the scroll position.
+    // Keep navigation buttons synchronized with the scroll position.
     const updateScrollButtons = useCallback(() => {
         const element = scrollRef.current;
 
         if (!element) return;
 
-        const maxScroll =
-            element.scrollWidth - element.clientWidth;
+        const maxScroll = element.scrollWidth - element.clientWidth;
 
         setCanScrollLeft(element.scrollLeft > 2);
-        setCanScrollRight(maxScroll > 2 && element.scrollLeft < maxScroll - 2);
+        setCanScrollRight(
+            maxScroll > 2 && element.scrollLeft < maxScroll - 2
+        );
     }, []);
 
     useEffect(() => {
@@ -47,19 +48,26 @@ const FeaturedRooms = () => {
             passive: true,
         });
 
+        // Observe changes in track and card dimensions.
         const resizeObserver = new ResizeObserver(() => {
             updateScrollButtons();
         });
 
         resizeObserver.observe(element);
 
-        // Recheck after room images and layout have loaded.
+        Array.from(element.children).forEach((card) => {
+            resizeObserver.observe(card);
+        });
+
+        // Recalculate after images load.
         const images = element.querySelectorAll("img");
+
+        const handleImageLoad = () => updateScrollButtons();
 
         images.forEach((img) => {
             if (!img.complete) {
-                img.addEventListener("load", updateScrollButtons);
-                img.addEventListener("error", updateScrollButtons);
+                img.addEventListener("load", handleImageLoad);
+                img.addEventListener("error", handleImageLoad);
             }
         });
 
@@ -68,13 +76,13 @@ const FeaturedRooms = () => {
             resizeObserver.disconnect();
 
             images.forEach((img) => {
-                img.removeEventListener("load", updateScrollButtons);
-                img.removeEventListener("error", updateScrollButtons);
+                img.removeEventListener("load", handleImageLoad);
+                img.removeEventListener("error", handleImageLoad);
             });
         };
     }, [featuredRooms.length, updateScrollButtons]);
 
-    // Scroll by one card, including the actual responsive gap.
+    // Scroll exactly one card, accounting for the responsive gap.
     const scrollRooms = (direction) => {
         const element = scrollRef.current;
 
@@ -94,6 +102,7 @@ const FeaturedRooms = () => {
         });
     };
 
+    // Toggle a room's favorite state.
     const toggleFavorite = (roomId) => {
         setFavorites((previous) =>
             previous.includes(roomId)
@@ -174,8 +183,8 @@ const FeaturedRooms = () => {
                 {featuredRooms.length > 0 ? (
                     <div className="relative">
 
-                        {/* Scroll Controls */}
-                        <div className="mb-4 flex items-center justify-end gap-2">
+                        {/* Desktop Scroll Controls */}
+                        <div className="mb-4 hidden items-center justify-end gap-2 sm:flex">
                             <button
                                 type="button"
                                 onClick={() => scrollRooms(-1)}
@@ -200,14 +209,24 @@ const FeaturedRooms = () => {
                         {/* Scrollable Track */}
                         <div
                             ref={scrollRef}
-                            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-5 sm:gap-5 lg:gap-6"
+                            className="
+                                flex gap-4
+                                overflow-x-auto overflow-y-hidden
+                                overscroll-x-contain
+                                snap-x snap-proximity
+                                scroll-smooth
+                                touch-pan-x
+                                pb-5
+                                sm:gap-5 sm:snap-mandatory
+                                lg:gap-6
+                            "
                             style={{
                                 scrollbarWidth: "none",
                                 WebkitOverflowScrolling: "touch",
                             }}
                         >
-                            {featuredRooms.map((room) => {
-                                const roomId = room.id;
+                            {featuredRooms.map((room, index) => {
+                                const roomId = room.id ?? room._id ?? index;
                                 const isFavorite = favorites.includes(roomId);
                                 const image = getRoomImage(room);
                                 const location = getRoomLocation(room.location);
@@ -225,7 +244,19 @@ const FeaturedRooms = () => {
                                     <article
                                         key={roomId}
                                         data-room-card
-                                        className="group flex w-[88%] min-w-0 shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md min-[420px]:w-[76%] sm:w-[47%] lg:w-[calc((100%-3rem)/3)]"
+                                        className="
+                                            group flex
+                                            w-[85%] min-w-0 shrink-0
+                                            snap-start flex-col
+                                            overflow-hidden
+                                            rounded-2xl border border-border
+                                            bg-card shadow-sm
+                                            transition-all duration-300
+                                            hover:-translate-y-1 hover:shadow-md
+                                            min-[420px]:w-[76%]
+                                            sm:w-[47%]
+                                            lg:w-[calc((100%-3rem)/3)]
+                                        "
                                     >
                                         {/* Room Image */}
                                         <div className="relative aspect-[4/3] shrink-0 overflow-hidden bg-border">
@@ -235,6 +266,7 @@ const FeaturedRooms = () => {
                                                     alt={title}
                                                     loading="lazy"
                                                     decoding="async"
+                                                    draggable="false"
                                                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                                 />
                                             ) : (
@@ -251,7 +283,7 @@ const FeaturedRooms = () => {
                                                 {room.type || room.category || "Room Rental"}
                                             </span>
 
-                                            {/* Favorite */}
+                                            {/* Favorite Button */}
                                             <button
                                                 type="button"
                                                 onClick={() => toggleFavorite(roomId)}
@@ -269,11 +301,7 @@ const FeaturedRooms = () => {
                                             >
                                                 <FiHeart
                                                     size={18}
-                                                    className={
-                                                        isFavorite
-                                                            ? "fill-current"
-                                                            : ""
-                                                    }
+                                                    className={isFavorite ? "fill-current" : ""}
                                                 />
                                             </button>
 
@@ -284,6 +312,7 @@ const FeaturedRooms = () => {
                                                         className="fill-secondary text-secondary"
                                                         size={15}
                                                     />
+
                                                     {Number(room.rating).toFixed(1)}
 
                                                     {room.reviewsCount != null && (
@@ -297,6 +326,7 @@ const FeaturedRooms = () => {
 
                                         {/* Room Details */}
                                         <div className="flex flex-1 flex-col p-4 sm:p-5">
+                                            {/* Location */}
                                             <div className="mb-2 flex min-w-0 items-center gap-2">
                                                 <FiMapPin
                                                     className="shrink-0 text-primary"
@@ -308,6 +338,7 @@ const FeaturedRooms = () => {
                                                 </p>
                                             </div>
 
+                                            {/* Title */}
                                             <h3 className="line-clamp-2 min-h-12 text-lg font-bold leading-6 text-text transition-colors duration-300 group-hover:text-primary sm:text-xl">
                                                 {title}
                                             </h3>
@@ -326,9 +357,13 @@ const FeaturedRooms = () => {
 
                                                 {room.bedrooms != null && (
                                                     <>
-                                                        <span aria-hidden="true" className="text-border">
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="text-border"
+                                                        >
                                                             |
                                                         </span>
+
                                                         <span>
                                                             {room.bedrooms}{" "}
                                                             {room.bedrooms === 1
@@ -342,9 +377,9 @@ const FeaturedRooms = () => {
                                             {/* Amenities */}
                                             {amenities.length > 0 && (
                                                 <div className="mt-4 flex flex-wrap gap-2">
-                                                    {amenities.map((amenity, index) => (
+                                                    {amenities.map((amenity, amenityIndex) => (
                                                         <span
-                                                            key={`${roomId}-${amenity}-${index}`}
+                                                            key={`${roomId}-${amenity}-${amenityIndex}`}
                                                             className="max-w-full truncate rounded-lg bg-background px-2.5 py-1.5 text-xs font-medium text-muted"
                                                         >
                                                             {amenity}
@@ -397,19 +432,42 @@ const FeaturedRooms = () => {
                             })}
                         </div>
 
-                        {/* Scroll Hint */}
-                        {canScrollRight && (
-                            <p className="mt-1 text-center text-xs text-muted sm:hidden">
-                                Swipe to explore more rooms
+                        {/* Mobile Swipe Hint & Controls */}
+                        <div className="mt-2 flex items-center justify-between gap-3 sm:hidden">
+                            <p className="text-xs leading-5 text-muted">
+                                Swipe to explore rooms
                                 <span className="ml-1 text-primary">→</span>
                             </p>
-                        )}
+
+                            <div className="flex shrink-0 items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => scrollRooms(-1)}
+                                    disabled={!canScrollLeft}
+                                    aria-label="Previous rooms"
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-text transition-all duration-200 hover:border-primary hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                                >
+                                    <FiArrowLeft size={18} />
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => scrollRooms(1)}
+                                    disabled={!canScrollRight}
+                                    aria-label="Next rooms"
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-text transition-all duration-200 hover:border-primary hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                                >
+                                    <FiArrowRight size={18} />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 ) : (
                     <div className="rounded-2xl border border-border bg-card px-5 py-12 text-center">
                         <h3 className="text-lg font-bold text-text">
                             No featured rooms yet
                         </h3>
+
                         <p className="mt-2 text-sm text-muted">
                             Please check back soon for available stays.
                         </p>

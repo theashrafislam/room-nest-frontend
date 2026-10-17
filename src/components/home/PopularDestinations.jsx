@@ -70,20 +70,17 @@ const PopularDestinations = () => {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
 
-    // Keep navigation buttons synchronized with scroll position.
+    // Synchronize navigation buttons with the scroll position.
     const updateScrollButtons = useCallback(() => {
         const element = scrollRef.current;
 
         if (!element) return;
 
-        const maxScroll =
-            element.scrollWidth - element.clientWidth;
+        const maxScroll = element.scrollWidth - element.clientWidth;
 
         setCanScrollLeft(element.scrollLeft > 2);
-
         setCanScrollRight(
-            maxScroll > 2 &&
-            element.scrollLeft < maxScroll - 2
+            maxScroll > 2 && element.scrollLeft < maxScroll - 2
         );
     }, []);
 
@@ -105,12 +102,18 @@ const PopularDestinations = () => {
 
         resizeObserver.observe(element);
 
+        Array.from(element.children).forEach((card) => {
+            resizeObserver.observe(card);
+        });
+
         const images = element.querySelectorAll("img");
+
+        const handleImageLoad = () => updateScrollButtons();
 
         images.forEach((img) => {
             if (!img.complete) {
-                img.addEventListener("load", updateScrollButtons);
-                img.addEventListener("error", updateScrollButtons);
+                img.addEventListener("load", handleImageLoad);
+                img.addEventListener("error", handleImageLoad);
             }
         });
 
@@ -119,13 +122,13 @@ const PopularDestinations = () => {
             resizeObserver.disconnect();
 
             images.forEach((img) => {
-                img.removeEventListener("load", updateScrollButtons);
-                img.removeEventListener("error", updateScrollButtons);
+                img.removeEventListener("load", handleImageLoad);
+                img.removeEventListener("error", handleImageLoad);
             });
         };
     }, [updateScrollButtons]);
 
-    // Scroll exactly one card plus the actual responsive gap.
+    // Scroll by one card plus the actual responsive gap.
     const scrollDestinations = (direction) => {
         const element = scrollRef.current;
 
@@ -147,7 +150,7 @@ const PopularDestinations = () => {
         });
     };
 
-    // Navigate to the rooms page with the selected location.
+    // Navigate to rooms filtered by destination.
     const handleDestinationClick = (destination) => {
         navigate(
             `/rooms?location=${encodeURIComponent(destination.name)}`
@@ -203,8 +206,8 @@ const PopularDestinations = () => {
                 {/* Destination Carousel */}
                 <div className="relative">
 
-                    {/* Scroll Controls */}
-                    <div className="mb-4 flex items-center justify-end gap-2">
+                    {/* Desktop Scroll Controls */}
+                    <div className="mb-4 hidden items-center justify-end gap-2 sm:flex">
                         <button
                             type="button"
                             onClick={() => scrollDestinations(-1)}
@@ -229,7 +232,16 @@ const PopularDestinations = () => {
                     {/* Scrollable Track */}
                     <div
                         ref={scrollRef}
-                        className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-5 sm:gap-5 lg:gap-6"
+                        className="
+                            flex gap-4
+                            overflow-x-auto overflow-y-hidden
+                            overscroll-x-contain
+                            snap-x snap-proximity
+                            scroll-smooth touch-pan-x
+                            pb-5
+                            sm:gap-5 sm:snap-mandatory
+                            lg:gap-6
+                        "
                         style={{
                             scrollbarWidth: "none",
                             WebkitOverflowScrolling: "touch",
@@ -244,7 +256,18 @@ const PopularDestinations = () => {
                                     handleDestinationClick(destination)
                                 }
                                 aria-label={`Explore stays in ${destination.name}, ${destination.country}`}
-                                className="group relative w-[88%] min-w-0 shrink-0 snap-start overflow-hidden rounded-2xl border border-border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md min-[420px]:w-[76%] sm:w-[47%] lg:w-[calc((100%-3rem)/3)]"
+                                className="
+                                    group relative
+                                    w-[85%] min-w-0 shrink-0
+                                    snap-start overflow-hidden
+                                    rounded-2xl border border-border
+                                    bg-card text-left shadow-sm
+                                    transition-all duration-300
+                                    hover:-translate-y-1 hover:shadow-md
+                                    min-[420px]:w-[76%]
+                                    sm:w-[47%]
+                                    lg:w-[calc((100%-3rem)/3)]
+                                "
                             >
                                 {/* Destination Image */}
                                 <div className="relative aspect-[4/5] overflow-hidden bg-border">
@@ -253,6 +276,7 @@ const PopularDestinations = () => {
                                         alt={`${destination.name}, ${destination.country}`}
                                         loading="lazy"
                                         decoding="async"
+                                        draggable="false"
                                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
 
@@ -296,13 +320,35 @@ const PopularDestinations = () => {
                         ))}
                     </div>
 
-                    {/* Mobile Scroll Hint */}
-                    {canScrollRight && (
-                        <p className="mt-1 text-center text-xs text-muted sm:hidden">
-                            Swipe to explore more destinations
+                    {/* Mobile Bottom Controls */}
+                    <div className="mt-2 flex items-center justify-between gap-3 sm:hidden">
+                        <p className="text-xs leading-5 text-muted">
+                            Swipe to explore
                             <span className="ml-1 text-primary">→</span>
                         </p>
-                    )}
+
+                        <div className="flex shrink-0 items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => scrollDestinations(-1)}
+                                disabled={!canScrollLeft}
+                                aria-label="Previous destinations"
+                                className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-text transition-all duration-200 hover:border-primary hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                            >
+                                <FiArrowLeft size={18} />
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => scrollDestinations(1)}
+                                disabled={!canScrollRight}
+                                aria-label="Next destinations"
+                                className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-text transition-all duration-200 hover:border-primary hover:text-primary active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                            >
+                                <FiArrowRight size={18} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Mobile View All */}

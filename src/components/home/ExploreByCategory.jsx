@@ -70,7 +70,7 @@ const ExploreByCategory = () => {
 
         setCanScrollRight(
             element.scrollLeft + element.clientWidth <
-                element.scrollWidth - 2
+            element.scrollWidth - 2
         );
     };
 
@@ -157,7 +157,7 @@ const ExploreByCategory = () => {
                 <div className="relative">
 
                     {/* Left / Right Controls */}
-                    <div className="mb-4 flex items-center justify-end gap-2">
+                    <div className="mb-4 hidden items-center justify-end gap-2 sm:flex">
                         <button
                             type="button"
                             onClick={() => scrollCategories(-1)}
@@ -235,17 +235,42 @@ const ExploreByCategory = () => {
                     </div>
                 </div>
 
-                {/* Mobile View All */}
-                <div className="mt-3 flex justify-center sm:hidden">
+
+                {/* Mobile Controls + View All */}
+                <div className="mt-3 flex items-center justify-center gap-2 sm:hidden">
+                    {/* Previous */}
+                    <button
+                        type="button"
+                        onClick={() => scrollCategories(-1)}
+                        disabled={!canScrollLeft}
+                        aria-label="Previous categories"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-text transition-all duration-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                    >
+                        <FiArrowLeft size={18} />
+                    </button>
+
+                    {/* View All */}
                     <button
                         type="button"
                         onClick={() => navigate("/rooms")}
-                        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-semibold text-primary transition-colors duration-300 hover:border-primary"
+                        className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-hover active:scale-[0.98]"
                     >
                         View all rooms
-                        <FiArrowRight size={17} />
+                        <FiArrowUpRight size={17} />
+                    </button>
+
+                    {/* Next */}
+                    <button
+                        type="button"
+                        onClick={() => scrollCategories(1)}
+                        disabled={!canScrollRight}
+                        aria-label="Next categories"
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-text transition-all duration-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35"
+                    >
+                        <FiArrowRight size={18} />
                     </button>
                 </div>
+
             </div>
         </section>
     );
