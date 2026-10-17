@@ -135,7 +135,7 @@ const Testimonials = () => {
     return (
         <section
             aria-labelledby="testimonials-title"
-            className="overflow-hidden bg-card py-16 sm:py-20 lg:py-24"
+            className="overflow-hidden bg-background py-16 sm:py-20 lg:py-24"
         >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Heading and Controls */}
@@ -200,7 +200,7 @@ const Testimonials = () => {
                         <article
                             key={testimonial.id}
                             data-testimonial-card
-                            className="flex h-auto min-h-[310px] w-[85%] shrink-0 snap-start flex-col rounded-2xl border border-border bg-background p-5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 sm:w-[calc((100%-1.5rem)/2)] sm:rounded-3xl sm:p-6 lg:w-[calc((100%-3rem)/3)] lg:p-7"
+                            className="flex h-auto min-h-[310px] w-[85%] shrink-0 snap-start flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 sm:w-[calc((100%-1.5rem)/2)] sm:rounded-3xl sm:p-6 lg:w-[calc((100%-3rem)/3)] lg:p-7"
                         >
                             {/* Stars and Label */}
                             <div className="flex items-center justify-between gap-3">

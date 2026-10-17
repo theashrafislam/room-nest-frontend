@@ -1,39 +1,30 @@
 import {
     FiSearch,
     FiHeart,
-    FiCalendarCheck,
+    FiCalendar,
     FiArrowRight,
     FiCheckCircle,
-} from "react-icons/fi";
+} from 'react-icons/fi';
 import { useNavigate } from "react-router";
 
 const steps = [
     {
-        id: 1,
-        number: "01",
-        title: "Find Your Perfect Stay",
-        description:
-            "Explore beautiful rooms, apartments, and villas. Use search and filters to discover a stay that matches your needs.",
+        number: '01',
         icon: FiSearch,
-        features: ["Easy room discovery", "Smart search & filters"],
+        title: 'Find Your Perfect Stay',
+        description: 'Explore rooms that match your destination and budget.',
     },
     {
-        id: 2,
-        number: "02",
-        title: "Choose Your Favorite",
-        description:
-            "Compare prices, explore room details, check amenities, and find the perfect place for your next journey.",
+        number: '02',
         icon: FiHeart,
-        features: ["Detailed room information", "Save your favorites"],
+        title: 'Choose Your Favorite',
+        description: 'Compare your favorite rooms and find the right fit.',
     },
     {
-        id: 3,
-        number: "03",
-        title: "Book With Confidence",
-        description:
-            "Choose your dates, select the number of guests, and complete your booking through a simple and convenient process.",
-        icon: FiCalendarCheck,
-        features: ["Simple booking process", "Clear pricing details"],
+        number: '03',
+        icon: FiCalendar,
+        title: 'Book With Confidence',
+        description: 'Choose your dates and prepare for a comfortable stay.',
     },
 ];
 
@@ -72,57 +63,22 @@ const HowItWorks = () => {
                 {/* Steps */}
                 <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-3 lg:gap-8">
                     {steps.map((step) => {
-                        const Icon = step.icon;
+                        const StepIcon = step.icon;
 
                         return (
-                            <article
-                                key={step.id}
-                                className="group relative flex h-full flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5 sm:rounded-3xl sm:p-7 lg:p-8"
-                            >
-                                {/* Card Top */}
-                                <div className="flex items-center justify-between">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white sm:h-14 sm:w-14">
-                                        <Icon
-                                            size={25}
-                                            strokeWidth={1.8}
-                                            aria-hidden="true"
-                                        />
-                                    </div>
-
-                                    <span className="text-3xl font-bold tracking-tight text-border transition-colors duration-300 group-hover:text-primary/20 sm:text-4xl">
-                                        {step.number}
-                                    </span>
+                            <div key={step.number}>
+                                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                                    <StepIcon className="h-6 w-6" />
                                 </div>
 
-                                {/* Card Content */}
-                                <h3 className="mt-6 text-lg font-bold leading-snug text-text sm:text-xl">
+                                <h3 className="mt-5 text-lg font-semibold text-text">
                                     {step.title}
                                 </h3>
 
-                                <p className="mt-3 flex-1 text-sm leading-7 text-body sm:text-base">
+                                <p className="mt-2 text-sm leading-6 text-body">
                                     {step.description}
                                 </p>
-
-                                {/* Features */}
-                                <ul className="mt-5 space-y-3 border-t border-border pt-5">
-                                    {step.features.map((feature) => (
-                                        <li
-                                            key={feature}
-                                            className="flex items-start gap-2.5 text-sm text-muted"
-                                        >
-                                            <FiCheckCircle
-                                                className="mt-0.5 shrink-0 text-primary"
-                                                size={17}
-                                                aria-hidden="true"
-                                            />
-                                            <span>{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                {/* Decorative Accent */}
-                                <div className="absolute bottom-0 left-5 right-5 h-0.5 origin-left scale-x-0 rounded-full bg-primary transition-transform duration-300 group-hover:scale-x-100 sm:left-7 sm:right-7 lg:left-8 lg:right-8" />
-                            </article>
+                            </div>
                         );
                     })}
                 </div>

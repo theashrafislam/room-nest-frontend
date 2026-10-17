@@ -8,6 +8,8 @@ import FeaturedRooms from '../../components/home/FeaturedRooms';
 import PopularDestinations from '../../components/home/PopularDestinations';
 import WhyChooseRoomNest from '../../components/home/WhyChooseRoomNest';
 import ExploreRoomsCTA from '../../components/home/ExploreRoomsCTA';
+import HowItWorks from '../../components/home/HowItWorks';
+import Testimonials from '../../components/home/Testimonials';
 
 export default function Home() {
 
@@ -36,8 +38,14 @@ export default function Home() {
             {/* Popular Destinations */}
             <PopularDestinations />
 
+            {/* How It Works */}
+            <HowItWorks />
+
             {/* Why Choose RoomNest */}
             <WhyChooseRoomNest />
+
+            {/* Testimonials */}
+            <Testimonials />
 
             {/* Explore Rooms CTA */}
             <ExploreRoomsCTA />
