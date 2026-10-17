@@ -7,6 +7,7 @@ import ExploreByCategory from '../../components/home/ExploreByCategory';
 import FeaturedRooms from '../../components/home/FeaturedRooms';
 import PopularDestinations from '../../components/home/PopularDestinations';
 import WhyChooseRoomNest from '../../components/home/WhyChooseRoomNest';
+import ExploreRoomsCTA from '../../components/home/ExploreRoomsCTA';
 
 export default function Home() {
 
@@ -37,6 +38,9 @@ export default function Home() {
 
             {/* Why Choose RoomNest */}
             <WhyChooseRoomNest />
+
+            {/* Explore Rooms CTA */}
+            <ExploreRoomsCTA />
 
         </div>
     )

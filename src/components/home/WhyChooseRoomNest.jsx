@@ -124,7 +124,7 @@ const WhyChooseRoomNest = () => {
                             {/* Decorative Elements */}
                             <div
                                 aria-hidden="true"
-                                className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-primary/5"
+                                className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-primary/8"
                             />
 
                             <div
