@@ -1,108 +1,77 @@
+
 import { useState } from "react";
-import { Link } from "react-router";
 import {
     FiUser,
     FiMail,
     FiPhone,
     FiMapPin,
-    FiCalendar,
-    FiHeart,
-    FiShield,
-    FiBell,
     FiEdit2,
     FiCheck,
-    FiArrowRight,
-    FiLogOut,
-    FiHome,
-    FiClock,
-    FiCheckCircle,
-    FiSettings,
-    FiChevronRight,
-    FiStar,
     FiX,
+    FiShield,
+    FiLock,
+    FiChevronRight,
+    FiCamera,
+    FiArrowLeft,
 } from "react-icons/fi";
-
-const defaultUser = {
-    name: "Alex Morgan",
-    email: "alex@example.com",
-    phone: "+880 1XXX-XXXXXX",
-    location: "Dhaka, Bangladesh",
-    bio: "I love discovering beautiful places and comfortable stays.",
-    avatar: "",
-    joinedAt: "October 2026",
-};
-
-const menuItems = [
-    { label: "My Profile", icon: FiUser, href: "#profile" },
-    { label: "My Bookings", icon: FiCalendar, href: "#bookings" },
-    { label: "Wishlist", icon: FiHeart, href: "/rooms" },
-    { label: "Notifications", icon: FiBell, href: "#settings" },
-    { label: "Security", icon: FiShield, href: "#settings" },
-];
+import { Link } from "react-router";
 
 const Profile = ({
-    user: initialUser,
-    bookings = [],
+    user = {},
     onUpdateProfile,
-    onLogout,
 }) => {
-    const [user, setUser] = useState({
-        ...defaultUser,
-        ...(initialUser || {}),
+    const getProfileData = (data) => ({
+        name: data.name || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        location: data.location || "",
+        bio: data.bio || "",
+        avatar: data.avatar || data.photoURL || "",
     });
 
-    const [formData, setFormData] = useState({
-        name: user.name || "",
-        email: user.email || "",
-        phone: user.phone || "",
-        location: user.location || "",
-        bio: user.bio || "",
-    });
+    const [profile, setProfile] = useState(() =>
+        getProfileData(user)
+    );
+
+    const [formData, setFormData] = useState(() =>
+        getProfileData(user)
+    );
 
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-    const upcomingBookings = bookings.filter(
-        (booking) =>
-            booking.status?.toLowerCase() === "confirmed" ||
-            booking.status?.toLowerCase() === "upcoming"
-    );
+    const initials =
+        profile.name
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map((part) => part[0])
+            .join("")
+            .toUpperCase() || "U";
 
-    const completedBookings = bookings.filter(
-        (booking) =>
-            booking.status?.toLowerCase() === "completed"
-    );
-
-    const stats = [
-        {
-            label: "Total Bookings",
-            value: bookings.length,
-            icon: FiHome,
-            description: "All your reservations",
-        },
-        {
-            label: "Upcoming Stays",
-            value: upcomingBookings.length,
-            icon: FiClock,
-            description: "Your next adventures",
-        },
-        {
-            label: "Completed Stays",
-            value: completedBookings.length,
-            icon: FiCheckCircle,
-            description: "Places you've explored",
-        },
-    ];
-
-    const handleInputChange = (event) => {
+    const handleChange = (event) => {
         const { name, value } = event.target;
 
         setFormData((previous) => ({
             ...previous,
             [name]: value,
         }));
+    };
+
+    const handleEdit = () => {
+        setFormData({ ...profile });
+        setMessage("");
+        setError("");
+        setIsEditing(true);
+    };
+
+    const handleCancel = () => {
+        setFormData({ ...profile });
+        setIsEditing(false);
+        setMessage("");
+        setError("");
     };
 
     const handleSave = async (event) => {
@@ -112,124 +81,150 @@ const Profile = ({
         setError("");
 
         if (!formData.name.trim() || !formData.email.trim()) {
-            setError("Name and email are required.");
+            setError("Name and email address are required.");
             return;
         }
 
         try {
             setIsSaving(true);
 
-            const updatedUser = {
-                ...user,
+            const updatedProfile = {
                 ...formData,
+                name: formData.name.trim(),
+                email: formData.email.trim(),
+                phone: formData.phone.trim(),
+                location: formData.location.trim(),
+                bio: formData.bio.trim(),
             };
 
             if (onUpdateProfile) {
-                await onUpdateProfile(updatedUser);
+                await onUpdateProfile(updatedProfile);
             }
 
-            setUser(updatedUser);
+            setProfile(updatedProfile);
+            setFormData(updatedProfile);
             setIsEditing(false);
+
             setMessage(
                 onUpdateProfile
-                    ? "Your profile has been updated."
-                    : "Changes updated in this page. Connect your API to save them permanently."
+                    ? "Your profile has been updated successfully."
+                    : "Profile updated in this session. Connect your API to save changes permanently."
             );
         } catch (err) {
             setError(
-                err?.message || "Unable to update your profile. Please try again."
+                err?.message ||
+                    "Unable to update your profile. Please try again."
             );
         } finally {
             setIsSaving(false);
         }
     };
 
-    const handleCancel = () => {
-        setFormData({
-            name: user.name || "",
-            email: user.email || "",
-            phone: user.phone || "",
-            location: user.location || "",
-            bio: user.bio || "",
-        });
+    const inputClass =
+        "w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-4 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90";
 
-        setIsEditing(false);
-        setMessage("");
-        setError("");
-    };
-
-    const initials = (user.name || "Guest")
-        .trim()
-        .split(/\s+/)
-        .slice(0, 2)
-        .map((part) => part[0])
-        .join("")
-        .toUpperCase();
+    const fields = [
+        {
+            label: "Full name",
+            name: "name",
+            icon: FiUser,
+            placeholder: "Enter your full name",
+            autoComplete: "name",
+            required: true,
+        },
+        {
+            label: "Email address",
+            name: "email",
+            icon: FiMail,
+            type: "email",
+            placeholder: "Enter your email address",
+            autoComplete: "email",
+            required: true,
+        },
+        {
+            label: "Phone number",
+            name: "phone",
+            icon: FiPhone,
+            type: "tel",
+            placeholder: "Enter your phone number",
+            autoComplete: "tel",
+        },
+        {
+            label: "Location",
+            name: "location",
+            icon: FiMapPin,
+            placeholder: "City, Country",
+            autoComplete: "address-level2",
+        },
+    ];
 
     return (
         <main className="min-h-screen bg-slate-50 pb-12 text-slate-800">
-            {/* Page heading */}
+            {/* Page header */}
             <section className="border-b border-slate-200 bg-white">
-                <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                        <div>
-                            <div className="mb-3 flex items-center gap-2 text-sm text-slate-500">
-                                <Link
-                                    to="/"
-                                    className="transition hover:text-teal-700"
-                                >
-                                    Home
-                                </Link>
-                                <FiChevronRight size={14} />
-                                <span className="font-medium text-teal-700">
-                                    My Profile
-                                </span>
-                            </div>
+                <div className="mx-auto max-w-6xl px-4 py-7 sm:px-6 sm:py-9 lg:px-8">
+                    <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <Link
+                            to="/"
+                            className="transition hover:text-teal-700"
+                        >
+                            Home
+                        </Link>
 
-                            <p className="mb-2 text-sm font-semibold tracking-wide text-teal-700">
-                                YOUR ROOMNEST ACCOUNT
+                        <FiChevronRight size={14} />
+
+                        <span className="font-medium text-teal-700">
+                            My Profile
+                        </span>
+                    </div>
+
+                    <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-teal-700 sm:text-sm">
+                                Account settings
                             </p>
 
                             <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-                                Welcome back, {user.name.split(" ")[0]}!
+                                My Profile
                             </h1>
 
                             <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500 sm:text-base">
-                                Manage your personal details, keep track of
-                                your stays, and make your next trip special.
+                                Manage your personal information and keep
+                                your account details up to date.
                             </p>
                         </div>
 
                         <Link
-                            to="/rooms"
-                            className="inline-flex w-fit items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2"
+                            to="/dashboard"
+                            className="inline-flex w-fit items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-800"
                         >
-                            Explore rooms
-                            <FiArrowRight size={17} />
+                            <FiArrowLeft size={16} />
+                            Back to Dashboard
                         </Link>
                     </div>
                 </div>
             </section>
 
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-                {/* Profile banner */}
+            <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+                {/* Profile overview */}
                 <section className="relative mb-6 overflow-hidden rounded-2xl bg-teal-800 p-5 text-white shadow-sm sm:p-7 lg:p-8">
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full border border-white/10"
+                        className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full border border-white/10"
                     />
+
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute -bottom-32 right-24 h-64 w-64 rounded-full border border-white/10"
+                        className="pointer-events-none absolute -bottom-36 right-24 h-64 w-64 rounded-full border border-white/10"
                     />
 
                     <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-                            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-white/20 bg-white/15 text-2xl font-bold text-white sm:h-24 sm:w-24 sm:text-3xl">
-                                {user.avatar ? (
+                            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-white/20 bg-white/15 text-2xl font-bold sm:h-24 sm:w-24 sm:text-3xl">
+                                {profile.avatar ? (
                                     <img
-                                        src={user.avatar}
-                                        alt={`${user.name}'s profile`}
+                                        src={profile.avatar}
+                                        alt={`${profile.name || "User"} avatar`}
                                         className="h-full w-full object-cover"
                                     />
                                 ) : (
@@ -238,580 +233,274 @@ const Profile = ({
                             </div>
 
                             <div className="min-w-0">
-                                <div className="mb-2 flex flex-wrap items-center gap-2">
-                                    <h2 className="break-words text-xl font-bold sm:text-2xl">
-                                        {user.name}
-                                    </h2>
+                                <h2 className="break-words text-xl font-bold sm:text-2xl">
+                                    {profile.name || "Your Name"}
+                                </h2>
 
-                                    <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium text-teal-50">
-                                        <FiCheck size={13} />
-                                        Member
-                                    </span>
+                                <p className="mt-1 break-all text-sm text-teal-100">
+                                    {profile.email || "Add your email address"}
+                                </p>
+
+                                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-teal-50">
+                                    <FiShield size={14} />
+                                    Account information
                                 </div>
-
-                                <p className="break-all text-sm text-teal-100">
-                                    {user.email}
-                                </p>
-
-                                <p className="mt-2 flex items-center gap-1.5 text-xs text-teal-100 sm:text-sm">
-                                    <FiCalendar size={14} />
-                                    Member since {user.joinedAt || "Recently"}
-                                </p>
                             </div>
                         </div>
 
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setIsEditing(true);
-                                setMessage("");
-                                setError("");
-                                document
-                                    .getElementById("profile")
-                                    ?.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "start",
-                                    });
-                            }}
-                            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-semibold transition hover:bg-white/20 sm:w-auto"
-                        >
-                            <FiEdit2 size={16} />
-                            Edit profile
-                        </button>
+                        {!isEditing && (
+                            <button
+                                type="button"
+                                onClick={handleEdit}
+                                className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/10 px-5 py-3 text-sm font-semibold transition hover:bg-white/20 sm:w-auto"
+                            >
+                                <FiEdit2 size={16} />
+                                Edit profile
+                            </button>
+                        )}
                     </div>
                 </section>
 
-                {/* Stats */}
-                <section
-                    aria-label="Booking statistics"
-                    className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3"
-                >
-                    {stats.map((stat) => {
-                        const Icon = stat.icon;
+                {/* Notifications */}
+                {message && (
+                    <div
+                        role="status"
+                        className="mb-5 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm leading-6 text-teal-800"
+                    >
+                        {message}
+                    </div>
+                )}
 
-                        return (
-                            <article
-                                key={stat.label}
-                                className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-teal-200 hover:shadow-md sm:p-6"
-                            >
-                                <div className="flex items-start justify-between gap-3">
-                                    <div>
-                                        <p className="text-sm font-medium text-slate-500">
-                                            {stat.label}
-                                        </p>
-                                        <p className="mt-2 text-3xl font-bold tabular-nums text-slate-900">
-                                            {stat.value}
-                                        </p>
-                                        <p className="mt-1 text-xs text-slate-500">
-                                            {stat.description}
-                                        </p>
-                                    </div>
+                {error && (
+                    <div
+                        role="alert"
+                        className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+                    >
+                        {error}
+                    </div>
+                )}
 
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
-                                        <Icon size={21} />
-                                    </div>
-                                </div>
-                            </article>
-                        );
-                    })}
-                </section>
-
-                {/* Main layout */}
                 <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
-                    {/* Sidebar */}
-                    <aside className="space-y-5 lg:col-span-4 xl:col-span-3">
-                        <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4">
-                            <p className="px-3 pb-3 pt-2 text-xs font-bold uppercase tracking-wider text-slate-400">
-                                Account menu
+                    {/* Personal information */}
+                    <section className="min-w-0 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7 lg:col-span-8">
+                        <div className="mb-6">
+                            <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+                                Personal information
+                            </h2>
+
+                            <p className="mt-1 text-sm leading-6 text-slate-500">
+                                Your personal details help us keep your
+                                account information accurate.
                             </p>
-
-                            <nav className="space-y-1">
-                                {menuItems.map((item, index) => {
-                                    const Icon = item.icon;
-
-                                    return (
-                                        <a
-                                            key={item.label}
-                                            href={item.href}
-                                            className={`group flex items-center justify-between rounded-xl px-3 py-3 transition ${
-                                                index === 0
-                                                    ? "bg-teal-50 font-semibold text-teal-800"
-                                                    : "text-slate-600 hover:bg-slate-50 hover:text-teal-800"
-                                            }`}
-                                        >
-                                            <span className="flex items-center gap-3">
-                                                <Icon size={18} />
-                                                <span className="text-sm">
-                                                    {item.label}
-                                                </span>
-                                            </span>
-
-                                            <FiChevronRight
-                                                size={16}
-                                                className="text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-teal-700"
-                                            />
-                                        </a>
-                                    );
-                                })}
-                            </nav>
-
-                            <div className="my-3 border-t border-slate-100" />
-
-                            <button
-                                type="button"
-                                onClick={onLogout}
-                                disabled={!onLogout}
-                                className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
-                            >
-                                <FiLogOut size={18} />
-                                Sign out
-                            </button>
                         </div>
 
-                        {/* Support card */}
-                        <div className="rounded-2xl border border-amber-100 bg-amber-50/70 p-5 sm:p-6">
-                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
-                                <FiStar size={20} />
+                        <form onSubmit={handleSave}>
+                            <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2">
+                                {fields.map((field) => {
+                                    const Icon = field.icon;
+
+                                    return (
+                                        <div key={field.name}>
+                                            <label
+                                                htmlFor={`profile-${field.name}`}
+                                                className="mb-2 block text-sm font-semibold text-slate-700"
+                                            >
+                                                {field.label}
+                                                {field.required && (
+                                                    <span className="ml-1 text-red-500">
+                                                        *
+                                                    </span>
+                                                )}
+                                            </label>
+
+                                            <div className="relative">
+                                                <Icon
+                                                    size={17}
+                                                    className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                                                />
+
+                                                <input
+                                                    id={`profile-${field.name}`}
+                                                    name={field.name}
+                                                    type={field.type || "text"}
+                                                    value={formData[field.name]}
+                                                    onChange={handleChange}
+                                                    disabled={!isEditing || isSaving}
+                                                    required={field.required}
+                                                    autoComplete={field.autoComplete}
+                                                    placeholder={field.placeholder}
+                                                    className={`${inputClass} pl-10`}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                <div className="sm:col-span-2">
+                                    <label
+                                        htmlFor="profile-bio"
+                                        className="mb-2 block text-sm font-semibold text-slate-700"
+                                    >
+                                        About me{" "}
+                                        <span className="font-normal text-slate-400">
+                                            (Optional)
+                                        </span>
+                                    </label>
+
+                                    <textarea
+                                        id="profile-bio"
+                                        name="bio"
+                                        rows={4}
+                                        maxLength={300}
+                                        value={formData.bio}
+                                        onChange={handleChange}
+                                        disabled={!isEditing || isSaving}
+                                        placeholder="Write a short introduction about yourself..."
+                                        className={`${inputClass} resize-y leading-6`}
+                                    />
+
+                                    {isEditing && (
+                                        <p className="mt-1.5 text-right text-xs text-slate-400">
+                                            {formData.bio.length}/300
+                                        </p>
+                                    )}
+                                </div>
                             </div>
 
-                            <h3 className="font-bold text-slate-900">
-                                Need a hand?
-                            </h3>
+                            {isEditing && (
+                                <div className="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+                                    <button
+                                        type="button"
+                                        onClick={handleCancel}
+                                        disabled={isSaving}
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+                                    >
+                                        <FiX size={16} />
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSaving}
+                                        className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+                                    >
+                                        <FiCheck size={17} />
+                                        {isSaving ? "Saving..." : "Save changes"}
+                                    </button>
+                                </div>
+                            )}
+                        </form>
+                    </section>
+
+                    {/* Account information sidebar */}
+                    <aside className="space-y-5 lg:col-span-4">
+                        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                            <div className="mb-5 flex items-center gap-3">
+                                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700">
+                                    <FiShield size={21} />
+                                </div>
+
+                                <div>
+                                    <h2 className="font-bold text-slate-900">
+                                        Account security
+                                    </h2>
+                                    <p className="mt-1 text-xs text-slate-500">
+                                        Keep your account protected.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                                <div className="flex items-start gap-3">
+                                    <FiLock
+                                        size={18}
+                                        className="mt-0.5 shrink-0 text-slate-500"
+                                    />
+
+                                    <div className="min-w-0 flex-1">
+                                        <h3 className="text-sm font-semibold text-slate-800">
+                                            Password & security
+                                        </h3>
+
+                                        <p className="mt-1 text-xs leading-5 text-slate-500">
+                                            Manage your password and account
+                                            security settings.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <Link
+                                    to="/change-password"
+                                    className="mt-4 inline-flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-800"
+                                >
+                                    Change password
+                                    <FiChevronRight size={16} />
+                                </Link>
+                            </div>
+
+                            <p className="mt-4 text-xs leading-5 text-slate-500">
+                                If your project uses Google or another
+                                provider to sign in, password management
+                                may need to happen through that provider.
+                            </p>
+                        </section>
+
+                        <section className="rounded-2xl border border-amber-100 bg-amber-50/70 p-5 sm:p-6">
+                            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+                                <FiUser size={20} />
+                            </div>
+
+                            <h2 className="font-bold text-slate-900">
+                                Need help?
+                            </h2>
 
                             <p className="mt-2 text-sm leading-6 text-slate-600">
-                                Have a question about your stay or account?
-                                We're here to help.
+                                Have a question about your account? Visit
+                                our help center for assistance.
                             </p>
 
                             <Link
                                 to="/help"
-                                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-800 hover:text-teal-900"
+                                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-teal-800 transition hover:text-teal-950"
                             >
                                 Visit Help Center
-                                <FiArrowRight size={16} />
+                                <FiChevronRight size={16} />
                             </Link>
-                        </div>
-                    </aside>
-
-                    {/* Main content */}
-                    <div className="space-y-6 lg:col-span-8 xl:col-span-9">
-                        {/* Personal information */}
-                        <section
-                            id="profile"
-                            className="scroll-mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
-                        >
-                            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                    <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                                        Personal information
-                                    </h2>
-                                    <p className="mt-1 text-sm text-slate-500">
-                                        Your details, your way.
-                                    </p>
-                                </div>
-
-                                {!isEditing && (
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setIsEditing(true);
-                                            setMessage("");
-                                            setError("");
-                                        }}
-                                        className="inline-flex w-fit items-center gap-2 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-teal-200 hover:bg-teal-50 hover:text-teal-800"
-                                    >
-                                        <FiEdit2 size={15} />
-                                        Edit details
-                                    </button>
-                                )}
-                            </div>
-
-                            {message && (
-                                <div
-                                    role="status"
-                                    className="mb-5 rounded-xl border border-teal-200 bg-teal-50 px-4 py-3 text-sm leading-6 text-teal-800"
-                                >
-                                    {message}
-                                </div>
-                            )}
-
-                            {error && (
-                                <div
-                                    role="alert"
-                                    className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-                                >
-                                    {error}
-                                </div>
-                            )}
-
-                            <form onSubmit={handleSave}>
-                                <div className="grid grid-cols-1 gap-x-5 gap-y-5 sm:grid-cols-2">
-                                    <div>
-                                        <label
-                                            htmlFor="profile-name"
-                                            className="mb-2 block text-sm font-semibold text-slate-700"
-                                        >
-                                            Full name
-                                        </label>
-
-                                        <div className="relative">
-                                            <FiUser
-                                                size={17}
-                                                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                                            />
-
-                                            <input
-                                                id="profile-name"
-                                                name="name"
-                                                value={formData.name}
-                                                onChange={handleInputChange}
-                                                disabled={!isEditing || isSaving}
-                                                required
-                                                autoComplete="name"
-                                                placeholder="Your full name"
-                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-2 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label
-                                            htmlFor="profile-email"
-                                            className="mb-2 block text-sm font-semibold text-slate-700"
-                                        >
-                                            Email address
-                                        </label>
-
-                                        <div className="relative">
-                                            <FiMail
-                                                size={17}
-                                                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                                            />
-
-                                            <input
-                                                id="profile-email"
-                                                name="email"
-                                                type="email"
-                                                value={formData.email}
-                                                onChange={handleInputChange}
-                                                disabled={!isEditing || isSaving}
-                                                required
-                                                autoComplete="email"
-                                                placeholder="you@example.com"
-                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-2 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label
-                                            htmlFor="profile-phone"
-                                            className="mb-2 block text-sm font-semibold text-slate-700"
-                                        >
-                                            Phone number
-                                        </label>
-
-                                        <div className="relative">
-                                            <FiPhone
-                                                size={17}
-                                                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                                            />
-
-                                            <input
-                                                id="profile-phone"
-                                                name="phone"
-                                                type="tel"
-                                                value={formData.phone}
-                                                onChange={handleInputChange}
-                                                disabled={!isEditing || isSaving}
-                                                autoComplete="tel"
-                                                placeholder="Enter phone number"
-                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-2 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label
-                                            htmlFor="profile-location"
-                                            className="mb-2 block text-sm font-semibold text-slate-700"
-                                        >
-                                            Location
-                                        </label>
-
-                                        <div className="relative">
-                                            <FiMapPin
-                                                size={17}
-                                                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                                            />
-
-                                            <input
-                                                id="profile-location"
-                                                name="location"
-                                                value={formData.location}
-                                                onChange={handleInputChange}
-                                                disabled={!isEditing || isSaving}
-                                                autoComplete="address-level2"
-                                                placeholder="City, Country"
-                                                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-2 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="sm:col-span-2">
-                                        <label
-                                            htmlFor="profile-bio"
-                                            className="mb-2 block text-sm font-semibold text-slate-700"
-                                        >
-                                            About me
-                                        </label>
-
-                                        <textarea
-                                            id="profile-bio"
-                                            name="bio"
-                                            rows={4}
-                                            maxLength={300}
-                                            value={formData.bio}
-                                            onChange={handleInputChange}
-                                            disabled={!isEditing || isSaving}
-                                            placeholder="Tell us a little about yourself..."
-                                            className="w-full resize-y rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:ring-2 focus:ring-teal-600/10 disabled:cursor-default disabled:opacity-90"
-                                        />
-
-                                        {isEditing && (
-                                            <p className="mt-1 text-right text-xs text-slate-400">
-                                                {formData.bio.length}/300
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {isEditing && (
-                                    <div className="mt-6 flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
-                                        <button
-                                            type="button"
-                                            onClick={handleCancel}
-                                            disabled={isSaving}
-                                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
-                                        >
-                                            <FiX size={16} />
-                                            Cancel
-                                        </button>
-
-                                        <button
-                                            type="submit"
-                                            disabled={isSaving}
-                                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
-                                        >
-                                            <FiCheck size={17} />
-                                            {isSaving
-                                                ? "Saving..."
-                                                : "Save changes"}
-                                        </button>
-                                    </div>
-                                )}
-                            </form>
                         </section>
 
-                        {/* Bookings */}
-                        <section
-                            id="bookings"
-                            className="scroll-mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
-                        >
-                            <div className="mb-5 flex items-center justify-between gap-3">
+                        <section className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+                            <div className="flex items-start gap-3">
+                                <FiShield
+                                    size={19}
+                                    className="mt-0.5 shrink-0 text-teal-700"
+                                />
+
                                 <div>
-                                    <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                                        Recent bookings
+                                    <h2 className="text-sm font-bold text-slate-900">
+                                        Your privacy matters
                                     </h2>
-                                    <p className="mt-1 text-sm text-slate-500">
-                                        Keep your trips organized.
-                                    </p>
-                                </div>
 
-                                <Link
-                                    to="/rooms"
-                                    className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-teal-700 transition hover:text-teal-900"
-                                >
-                                    Find stays
-                                    <FiArrowRight size={16} />
-                                </Link>
-                            </div>
-
-                            {bookings.length > 0 ? (
-                                <div className="space-y-3">
-                                    {bookings.slice(0, 4).map((booking, index) => (
-                                        <article
-                                            key={
-                                                booking._id ||
-                                                booking.id ||
-                                                index
-                                            }
-                                            className="flex flex-col gap-4 rounded-xl border border-slate-200 p-4 transition hover:border-teal-200 sm:flex-row sm:items-center"
-                                        >
-                                            <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-teal-50 text-teal-700">
-                                                {booking.room?.images?.[0] ||
-                                                booking.image ? (
-                                                    <img
-                                                        src={
-                                                            booking.room
-                                                                ?.images?.[0] ||
-                                                            booking.image
-                                                        }
-                                                        alt=""
-                                                        className="h-full w-full object-cover"
-                                                    />
-                                                ) : (
-                                                    <FiHome size={23} />
-                                                )}
-                                            </div>
-
-                                            <div className="min-w-0 flex-1">
-                                                <h3 className="break-words font-semibold text-slate-900">
-                                                    {booking.room?.title ||
-                                                        booking.roomName ||
-                                                        booking.title ||
-                                                        "Room reservation"}
-                                                </h3>
-
-                                                <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-500">
-                                                    <FiCalendar size={14} />
-                                                    {booking.checkIn ||
-                                                        booking.startDate ||
-                                                        "Date not provided"}
-                                                </p>
-                                            </div>
-
-                                            <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end">
-                                                <span
-                                                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                                                        booking.status?.toLowerCase() ===
-                                                        "cancelled"
-                                                            ? "bg-red-50 text-red-700"
-                                                            : booking.status?.toLowerCase() ===
-                                                                "completed"
-                                                              ? "bg-slate-100 text-slate-600"
-                                                              : "bg-teal-50 text-teal-800"
-                                                    }`}
-                                                >
-                                                    {booking.status ||
-                                                        "Pending"}
-                                                </span>
-
-                                                {booking.totalPrice != null && (
-                                                    <p className="font-bold text-slate-900">
-                                                        ৳
-                                                        {Number(
-                                                            booking.totalPrice
-                                                        ).toLocaleString()}
-                                                    </p>
-                                                )}
-                                            </div>
-                                        </article>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="rounded-xl border border-dashed border-slate-200 px-4 py-10 text-center sm:py-12">
-                                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-teal-700">
-                                        <FiCalendar size={25} />
-                                    </div>
-
-                                    <h3 className="mt-4 font-bold text-slate-900">
-                                        No bookings yet
-                                    </h3>
-
-                                    <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">
-                                        Your next memorable stay is waiting.
-                                        Explore our rooms and find a place
-                                        that feels like home.
+                                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                                        Review how your personal information
+                                        is handled.
                                     </p>
 
                                     <Link
-                                        to="/rooms"
-                                        className="mt-5 inline-flex items-center justify-center gap-2 rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-800"
+                                        to="/privacy"
+                                        className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-teal-700 hover:text-teal-900"
                                     >
-                                        Explore rooms
-                                        <FiArrowRight size={16} />
+                                        Privacy policy
+                                        <FiChevronRight size={15} />
                                     </Link>
                                 </div>
-                            )}
-                        </section>
-
-                        {/* Settings */}
-                        <section
-                            id="settings"
-                            className="scroll-mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
-                        >
-                            <div className="mb-5">
-                                <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                                    Account & preferences
-                                </h2>
-                                <p className="mt-1 text-sm text-slate-500">
-                                    Quick access to account resources.
-                                </p>
-                            </div>
-
-                            <div className="divide-y divide-slate-100">
-                                <Link
-                                    to="/privacy"
-                                    className="group flex items-center gap-4 py-4 first:pt-0 last:pb-0"
-                                >
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700 transition group-hover:bg-teal-100">
-                                        <FiShield size={20} />
-                                    </div>
-
-                                    <div className="min-w-0 flex-1">
-                                        <h3 className="text-sm font-semibold text-slate-800">
-                                            Privacy & security
-                                        </h3>
-                                        <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-sm">
-                                            Learn how your personal information
-                                            is handled.
-                                        </p>
-                                    </div>
-
-                                    <FiChevronRight
-                                        size={18}
-                                        className="shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-teal-700"
-                                    />
-                                </Link>
-
-                                <Link
-                                    to="/help"
-                                    className="group flex items-center gap-4 py-4"
-                                >
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 transition group-hover:bg-amber-100">
-                                        <FiSettings size={20} />
-                                    </div>
-
-                                    <div className="min-w-0 flex-1">
-                                        <h3 className="text-sm font-semibold text-slate-800">
-                                            Help & support
-                                        </h3>
-                                        <p className="mt-1 text-xs leading-5 text-slate-500 sm:text-sm">
-                                            Get help with bookings and your
-                                            account.
-                                        </p>
-                                    </div>
-
-                                    <FiChevronRight
-                                        size={18}
-                                        className="shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-teal-700"
-                                    />
-                                </Link>
                             </div>
                         </section>
-                    </div>
+                    </aside>
                 </div>
 
-                {/* Bottom note */}
                 <footer className="mt-8 border-t border-slate-200 pt-5 text-center">
-                    <p className="text-xs leading-6 text-slate-500 sm:text-sm">
-                        Made for better stays, with{" "}
-                        <FiHeart
-                            size={13}
-                            className="mx-0.5 inline text-amber-500"
-                        />{" "}
-                        by RoomNest.
+                    <p className="text-xs leading-6 text-slate-500">
+                        RoomNest · Your account, your way.
                     </p>
                 </footer>
             </div>
