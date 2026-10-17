@@ -14,6 +14,7 @@ import CancellationPolicy from "../pages/support/CancellationPolicy";
 import Rooms from "../pages/rooms/Rooms";
 import RoomDetails from "../pages/rooms/RoomDetails";
 import PrivateRoute from "./PrivateRoute";
+import Profile from "../pages/profile/Profile";
 
 const url = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
             
 
             // Private routes
-            {element: <PrivateRoute/>, children: [{path: "/room/:id", Component: RoomDetails}]},
+            {element: <PrivateRoute/>, children: [{path: "/room/:id", Component: RoomDetails}, { path: "/profile", Component: Profile }]},
 
 
             { path: '/help', Component: HelpCenter },
